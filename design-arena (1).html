@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noman Burger — Fast Food & BBQ | Hyderabad</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script>tailwind.config={theme:{extend:{colors:{brand:'#FF5A00',brand2:'#FFB800',dark:'#12100E',cream:'#FFF7ED'},fontFamily:{display:['Bebas Neue','sans-serif'],sans:['Plus Jakarta Sans','Inter','sans-serif']}}}}</script>
+<style>
+*{scrollbar-width:thin;scrollbar-color:#FF5A00 #FFF1E6}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-thumb{background:#FF5A00;border-radius:99px}
+.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{scrollbar-width:none}
+.hero-img{clip-path:polygon(0 0,100% 0,100% 88%,88% 100%,0 100%)}
+.card-img{transition:transform .6s cubic-bezier(.2,.9,.3,1)}
+.menu-card:hover .card-img{transform:scale(1.08) rotate(-1deg)}
+.marquee{animation:marquee 18s linear infinite}@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.float{animation:float 3.5s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.fadeIn{animation:fadeIn .4s ease both}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.drawer{transition:transform .45s cubic-bezier(.7,0,.2,1)}
+input,select,textarea{outline:none} input:focus,select:focus,textarea:focus{border-color:#FF5A00!important;box-shadow:0 0 0 3px rgba(255,90,0,.15)}
+.tab-active{background:#12100E!important;color:white!important}
+.cat-active{background:#FF5A00!important;color:white!important;border-color:#FF5A00!important;box-shadow:0 10px 25px rgba(255,90,0,.35)}
+</style>
+</head>
+<body class="bg-[#FFF8F0] text-[#171412] font-sans overflow-x-hidden">
+
+<!-- TOP BAR -->
+<div class="bg-[#12100E] text-white text-[12px] md:text-[13px]">
+<div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap justify-between gap-2 items-center">
+<p class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand2"></i><span id="topAddress">99PF+J7C Shahi Bazar, Pakka Qila, Hyderabad, Pakistan</span> <span class="hidden md:inline text-white/50">• Open Daily 11 AM – 2 AM</span></p>
+<div class="flex items-center gap-4"><a href="tel:03122215100" class="font-bold"><i class="fa-solid fa-phone text-brand2"></i> 0312 2215100</a><button onclick="openAdminLogin()" class="bg-white/10 hover:bg-brand px-3 py-1 rounded-full font-bold">⚙️ Admin Panel</button><span id="userTop" class="hidden md:flex items-center gap-1 text-brand2 font-bold cursor-pointer" onclick="openAuth()"><i class="fa-regular fa-user"></i> Login</span></div>
+</div>
+</div>
+
+<!-- NAV -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b shadow-[0_5px_30px_rgba(0,0,0,0.06)]">
+<div class="max-w-7xl mx-auto px-4 h-[72px] flex items-center justify-between gap-3">
+<a href="#" class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-[#12100E] text-white grid place-items-center relative overflow-hidden"><span class="font-display text-[28px] leading-none pt-1">N</span><span class="absolute bottom-1 w-6 h-[3px] bg-brand rounded-full"></span></div>
+<div class="leading-none"><p class="font-display text-[26px] tracking-wide leading-none">NOMAN <span class="text-brand">BURGER</span></p><p class="text-[10px] tracking-[0.22em] font-bold text-zinc-500">FAST FOOD & BBQ • HYDERABAD</p></div>
+</a>
+<nav class="hidden lg:flex items-center gap-7 text-[14px] font-semibold"><a href="#menu" class="hover:text-brand">Menu</a><a href="#deals" class="hover:text-brand">Deals</a><a href="#gallery" class="hover:text-brand">Gallery</a><a href="#reviews" class="hover:text-brand">Reviews</a><a href="#contact" class="hover:text-brand">Contact</a></nav>
+<div class="flex items-center gap-2">
+<div class="hidden md:flex items-center bg-zinc-100 rounded-full pl-3 pr-1 py-1 border"><i class="fa-solid fa-magnifying-glass text-zinc-400 text-sm"></i><input id="navSearch" oninput="handleSearch(this.value)" placeholder="Search burger, shawarma..." class="bg-transparent border-0 shadow-none text-sm w-[170px] px-2" style="box-shadow:none!important"><button onclick="scrollToMenu()" class="bg-dark text-white text-xs px-3 py-1.5 rounded-full">Search</button></div>
+<button onclick="openAuth()" id="authBtn" class="hidden sm:flex items-center gap-2 border rounded-full px-4 py-2 text-sm font-bold hover:border-brand"><i class="fa-regular fa-user"></i><span id="authBtnText">Login / Sign Up</span></button>
+<button onclick="toggleCart(true)" class="relative bg-brand text-white rounded-full pl-4 pr-4 py-2.5 font-bold text-sm shadow-lg shadow-orange-500/30 flex items-center gap-2"><i class="fa-solid fa-basket-shopping"></i><span class="hidden sm:inline">Cart</span><span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-black text-white text-[11px] w-6 h-6 grid place-items-center rounded-full border-2 border-white">0</span><span id="cartTotalBadge" class="text-brand2">Rs.0</span></button>
+</div>
+</div>
+<!-- Category Quick Bar -->
+<div class="border-t bg-white"><div class="max-w-7xl mx-auto px-4 py-2 flex gap-2 overflow-x-auto no-scrollbar" id="catBar"></div></div>
+</header>
+
+<!-- HERO -->
+<section class="relative overflow-hidden bg-[#12100E] text-white">
+<div class="absolute inset-0 opacity-20"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&q=80" class="w-full h-full object-cover"></div>
+<div class="relative max-w-7xl mx-auto px-4 pt-8 pb-10 md:py-14 grid lg:grid-cols-2 gap-10 items-center">
+<div>
+<div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-3 py-1 text-xs font-bold"><span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> OPEN NOW • DELIVERY IN HYDERABAD <span class="bg-brand px-2 py-0.5 rounded-full">4.9 ★</span></div>
+<h1 id="heroTitle" class="font-display text-[62px] leading-[0.9] md:text-[92px] mt-4">TASTE THE<br><span class="text-brand2">REAL FLAME</span><br>BURGER & BBQ</h1>
+<p id="heroSub" class="text-white/70 mt-3 max-w-lg text-[15px] leading-relaxed">Welcome to <b class="text-white">Noman Burger</b> — Hyderabad's favourite spot for juicy Zingers, smoky BBQ Boti Burgers, Dulhan Paratha & crispy Broast. Fresh, hot & made to order at Pakka Qila.</p>
+<div class="flex flex-wrap gap-3 mt-6">
+<button onclick="scrollToMenu()" class="bg-brand hover:bg-orange-600 px-6 py-3.5 rounded-full font-extrabold text-sm shadow-xl shadow-orange-500/30 flex items-center gap-2">ORDER NOW <i class="fa-solid fa-arrow-right"></i></button>
+<button onclick="openDeals()" class="bg-white text-black px-6 py-3.5 rounded-full font-extrabold text-sm">🔥 View Deals — Save 25%</button>
+<a href="https://wa.me/923122215100?text=Assalamualaikum!%20I%20want%20to%20order%20from%20Noman%20Burger" target="_blank" class="bg-[#22c55e] px-5 py-3.5 rounded-full font-extrabold text-sm flex items-center gap-2"><i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp Order</a>
+</div>
+<div class="grid grid-cols-4 gap-3 mt-8 max-w-lg">
+<div class="bg-white/5 border border-white/10 rounded-2xl p-3"><p class="font-display text-2xl">32+</p><p class="text-[11px] text-white/60 font-bold">MENU ITEMS</p></div>
+<div class="bg-white/5 border border-white/10 rounded-2xl p-3"><p class="font-display text-2xl">15<span class="text-brand2">min</span></p><p class="text-[11px] text-white/60 font-bold">FAST PREP</p></div>
+<div class="bg-white/5 border border-white/10 rounded-2xl p-3"><p class="font-display text-2xl">4.9★</p><p class="text-[11px] text-white/60 font-bold">2.4k REVIEWS</p></div>
+<div class="bg-white/5 border border-white/10 rounded-2xl p-3"><p class="font-display text-2xl text-brand2">Rs.40</p><p class="text-[11px] text-white/60 font-bold">STARTING PRICE</p></div>
+</div>
+<p class="text-xs text-white/50 mt-4 flex items-center gap-4"><span>✓ Cash on Delivery</span><span>✓ JazzCash / Easypaisa</span><span id="delInfo">✓ Delivery Rs.80 • FREE over Rs.1000</span></p>
+</div>
+<div class="relative">
+<div class="relative rounded-[28px] overflow-hidden border-4 border-white/10 shadow-2xl hero-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1000&q=80" class="w-full h-[380px] md:h-[460px] object-cover"><div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div><div class="absolute bottom-4 left-4 right-4 flex justify-between items-end"><div><p class="text-brand2 font-display text-xl tracking-wider">MOST LOVED</p><p class="font-display text-3xl leading-none">ZINGER BURGER + BROAST</p></div><p class="bg-brand px-3 py-1 rounded-full font-bold text-sm">Rs.320</p></div></div>
+<div class="absolute -bottom-4 -left-2 md:left-6 bg-white text-black rounded-2xl shadow-2xl p-3 flex items-center gap-3 float"><img src="https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=200&q=80" class="w-14 h-14 rounded-xl object-cover"><div><p class="font-extrabold text-sm leading-none">Crispy Broast</p><p class="text-xs text-zinc-500">Golden • Juicy • Hot</p><p class="text-brand font-extrabold text-sm">Rs.480 <s class="text-zinc-400 font-medium">Rs.580</s></p></div><button onclick="addToCart(10)" class="bg-black text-white w-8 h-8 rounded-full">+</button></div>
+<div class="absolute -top-3 right-4 bg-brand2 text-black font-extrabold text-xs px-3 py-2 rounded-full shadow-lg rotate-2">★ HYDERABAD'S #1 BBQ BURGER</div>
+</div>
+</div>
+<div class="relative bg-brand text-white overflow-hidden py-2.5"><div class="flex whitespace-nowrap marquee font-display tracking-wider text-lg"><span class="pr-6">🍔 BBQ BOTI BURGER Rs.250 &nbsp;•&nbsp; 🔥 ZINGER Rs.320 &nbsp;•&nbsp; 🌯 SHAWARMA Rs.120 &nbsp;•&nbsp; 🫓 DULHAN PARATHA Rs.320 &nbsp;•&nbsp; 🍗 BROAST Rs.480 &nbsp;•&nbsp; 🍟 FRIES • SEEKH KABAB • MALAI BOTI &nbsp;•&nbsp;</span><span class="pr-6">🍔 BBQ BOTI BURGER Rs.250 &nbsp;•&nbsp; 🔥 ZINGER Rs.320 &nbsp;•&nbsp; 🌯 SHAWARMA Rs.120 &nbsp;•&nbsp; 🫓 DULHAN PARATHA Rs.320 &nbsp;•&nbsp; 🍗 BROAST Rs.480 &nbsp;•&nbsp; 🍟 FRIES • SEEKH KABAB • MALAI BOTI &nbsp;•&nbsp;</span></div></div>
+</section>
+
+<!-- POPULAR -->
+<section class="max-w-7xl mx-auto px-4 pt-10">
+<div class="flex items-end justify-between gap-4"><div><p class="text-brand font-extrabold text-xs tracking-[0.2em]">★ CUSTOMER FAVOURITES</p><h2 class="font-display text-4xl md:text-5xl leading-none mt-1">POPULAR ITEMS <span class="text-brand">— MOST ORDERED</span></h2></div><div class="hidden md:flex gap-2"><button onclick="scrollPopular(-1)" class="w-10 h-10 rounded-full border bg-white">←</button><button onclick="scrollPopular(1)" class="w-10 h-10 rounded-full bg-black text-white">→</button></div></div>
+<div id="popularRow" class="flex gap-4 overflow-x-auto no-scrollbar snap-x py-5"></div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="max-w-7xl mx-auto px-4 py-6 scroll-mt-32">
+<div class="bg-white rounded-[28px] border shadow-sm p-4 md:p-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div><h2 class="font-display text-4xl leading-none">COMPLETE FOOD MENU</h2><p class="text-sm text-zinc-500">Exact prices in PKR • Tap + to add to cart • Price on Request items via WhatsApp</p></div>
+<div class="flex gap-2 flex-wrap">
+<select id="sortSel" onchange="renderMenu()" class="border rounded-full px-4 py-2.5 text-sm font-semibold bg-white"><option value="pop">Sort: Popular</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option><option value="name">Name A-Z</option></select>
+<select id="priceFilter" onchange="renderMenu()" class="border rounded-full px-4 py-2.5 text-sm font-semibold bg-white"><option value="all">All Prices</option><option value="under200">Under Rs.200</option><option value="200-400">Rs.200 – 400</option><option value="400+">Rs.400+</option></select>
+</div>
+</div>
+<div id="filterPills" class="flex gap-2 overflow-x-auto no-scrollbar py-4"></div>
+<div class="flex items-center gap-2 bg-zinc-50 border rounded-full px-4 py-1 md:hidden"><i class="fa-solid fa-search text-zinc-400"></i><input oninput="handleSearch(this.value)" placeholder="Search food..." class="flex-1 bg-transparent py-2 text-sm border-0" style="box-shadow:none"></div>
+<p id="resultCount" class="text-xs font-bold text-zinc-500 pb-3"></p>
+<div id="menuGrid" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5"></div>
+<div id="emptyState" class="hidden text-center py-16"><p class="text-5xl">🍔</p><p class="font-display text-2xl mt-2">No item found</p><p class="text-sm text-zinc-500">Try another search or category</p><button onclick="clearFilters()" class="mt-3 bg-black text-white px-5 py-2 rounded-full text-sm font-bold">Clear Filters</button></div>
+</div>
+</section>
+
+<!-- DEALS -->
+<section id="deals" class="max-w-7xl mx-auto px-4 py-4 scroll-mt-28">
+<div class="flex justify-between items-end"><div><p class="text-brand font-extrabold text-xs tracking-widest">💰 SAVE MORE</p><h2 class="font-display text-4xl md:text-5xl">SPECIAL DEALS</h2></div><span class="hidden md:block bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">LIMITED TIME</span></div>
+<div class="grid md:grid-cols-3 gap-4 mt-5">
+<div class="rounded-[24px] overflow-hidden bg-[#12100E] text-white relative group"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80" class="h-44 w-full object-cover opacity-80 group-hover:scale-105 transition duration-500"><div class="p-5"><span class="bg-brand text-xs font-bold px-2 py-1 rounded-full">FAMILY DEAL -25%</span><h3 class="font-display text-2xl mt-2">Family BBQ Feast</h3><p class="text-white/60 text-sm">2 Zinger + 2 BBQ Boti Burger + Broast (2pc) + Large Fries + 1.5L Drink</p><div class="flex justify-between items-center mt-4"><p><span class="font-display text-3xl text-brand2">Rs.1,499</span> <s class="text-white/40">Rs.1,980</s></p><button onclick="addDeal('Family BBQ Feast',1499)" class="bg-brand px-4 py-2 rounded-full font-bold text-sm">Add Deal +</button></div></div></div>
+<div class="rounded-[24px] overflow-hidden bg-white border shadow-sm group"><img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=80" class="h-44 w-full object-cover group-hover:scale-105 transition duration-500"><div class="p-5"><span class="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded-full">COUPLE DEAL</span><h3 class="font-display text-2xl mt-1">Shawarma Duo</h3><p class="text-zinc-500 text-sm">2 BBQ Shawarma + 2 Cheese Shawarma + Fries + 2 Drinks — Perfect for 2</p><div class="flex justify-between items-center mt-4"><p><span class="font-display text-3xl">Rs.649</span> <s class="text-zinc-400">Rs.820</s></p><button onclick="addDeal('Shawarma Duo Deal',649)" class="bg-black text-white px-4 py-2 rounded-full font-bold text-sm">Add Deal +</button></div></div></div>
+<div class="rounded-[24px] overflow-hidden bg-gradient-to-br from-orange-500 to-red-600 text-white group"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80" class="h-44 w-full object-cover opacity-90 group-hover:scale-105 transition duration-500"><div class="p-5"><span class="bg-white text-red-600 text-xs font-bold px-2 py-1 rounded-full">PARATHA SPECIAL</span><h3 class="font-display text-2xl mt-2">Dulhan Paratha Deal</h3><p class="text-white/80 text-sm">Dulhan Paratha Special + Pizza Paratha + Halwa Puri (2) + Lassi / Tea</p><div class="flex justify-between items-center mt-4"><p><span class="font-display text-3xl">Rs.899</span> <s class="opacity-60">Rs.1,150</s></p><button onclick="addDeal('Dulhan Paratha Deal',899)" class="bg-white text-red-600 px-4 py-2 rounded-full font-bold text-sm">Add Deal +</button></div></div></div>
+</div>
+<div class="mt-4 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex flex-wrap justify-between gap-2 text-sm"><p>🎟️ Use code <b class="bg-black text-brand2 px-2 py-0.5 rounded-md tracking-wider">NOMAN10</b> for extra 10% OFF on orders over Rs.800 in cart</p><button onclick="applyPromo('NOMAN10')" class="font-bold text-brand underline">Apply Code</button></div>
+</section>
+
+<!-- WHY + GALLERY -->
+<section class="max-w-7xl mx-auto px-4 py-8 grid lg:grid-cols-3 gap-5">
+<div class="bg-[#12100E] text-white rounded-[24px] p-6"><h3 class="font-display text-3xl">WHY NOMAN?</h3><div class="space-y-4 mt-4 text-sm"><p class="flex gap-3"><span class="w-9 h-9 rounded-xl bg-brand grid place-items-center shrink-0">🔥</span><span><b>Live BBQ & Fresh Daily</b><br><span class="text-white/60">Seekh Kabab, Malai Boti & Tikka grilled on order — never frozen taste.</span></span></p><p class="flex gap-3"><span class="w-9 h-9 rounded-xl bg-brand2 text-black grid place-items-center shrink-0">⚡</span><span><b>15-Minute Prep</b><br><span class="text-white/60">Hot & crispy delivery across Shahi Bazar, Pakka Qila & nearby areas.</span></span></p><p class="flex gap-3"><span class="w-9 h-9 rounded-xl bg-emerald-500 grid place-items-center shrink-0">💸</span><span><b>Honest PKR Prices</b><br><span class="text-white/60">Starting at just Rs.40. No hidden charges. COD available.</span></span></p></div><button onclick="scrollToMenu()" class="mt-5 w-full bg-white text-black py-3 rounded-full font-bold text-sm">Browse Full Menu →</button></div>
+<div id="gallery" class="lg:col-span-2 scroll-mt-32"><div class="flex justify-between items-center"><h3 class="font-display text-3xl">FOOD GALLERY</h3><span class="text-xs font-bold bg-white border px-3 py-1 rounded-full">Real Food • Real Taste</span></div><div class="grid grid-cols-4 gap-2 mt-3" id="galleryGrid"></div></div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="max-w-7xl mx-auto px-4 pb-8 scroll-mt-32">
+<div class="bg-white rounded-[24px] border p-5 md:p-7">
+<div class="flex flex-wrap justify-between gap-3"><div><p class="text-brand text-xs font-extrabold tracking-widest">⭐ 4.9 / 5 — 2,418 REVIEWS</p><h2 class="font-display text-4xl">WHAT HYDERABAD SAYS</h2></div><button onclick="addReviewPrompt()" class="bg-black text-white px-4 py-2 rounded-full text-sm font-bold h-fit">+ Write a Review</button></div>
+<div id="reviewGrid" class="grid md:grid-cols-3 gap-4 mt-5"></div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="max-w-7xl mx-auto px-4 pb-10 scroll-mt-32">
+<div class="grid lg:grid-cols-5 gap-5">
+<div class="lg:col-span-2 bg-white rounded-[24px] border p-6">
+<p class="text-brand font-extrabold text-xs tracking-widest">📍 VISIT OR ORDER</p><h2 class="font-display text-4xl leading-none mt-1">NOMAN BURGER<br><span class="text-brand text-2xl">FAST FOOD & BBQ</span></h2>
+<div class="space-y-3 mt-5 text-sm"><p class="flex gap-3 bg-zinc-50 rounded-xl p-3"><i class="fa-solid fa-location-dot text-brand mt-0.5"></i><span><b>Address</b><br>99PF+J7C Shahi Bazar, Pakka Qila,<br>Shahi Bazar, Hyderabad, Pakistan</span></p><p class="flex gap-3 bg-zinc-50 rounded-xl p-3"><i class="fa-solid fa-phone text-brand mt-0.5"></i><span><b>Phone / WhatsApp</b><br><a href="tel:03122215100" class="font-bold text-base">0312 2215100</a><br><span class="text-zinc-500">Tap WhatsApp button to chat instantly</span></span></p><p class="flex gap-3 bg-zinc-50 rounded-xl p-3"><i class="fa-regular fa-clock text-brand mt-0.5"></i><span><b id="hoursText">Opening Hours</b><br>Mon – Sun: 11:00 AM – 2:00 AM<br><span class="text-emerald-600 font-bold">● Open Now</span></span></p></div>
+<div class="flex gap-2 mt-4"><a target="_blank" href="https://www.google.com/maps/search/?api=1&query=Pakka+Qila+Shahi+Bazar+Hyderabad+Pakistan" class="flex-1 text-center bg-black text-white py-3 rounded-full font-bold text-sm">Get Directions ↗</a><a target="_blank" href="https://wa.me/923122215100" class="flex-1 text-center bg-[#22c55e] text-white py-3 rounded-full font-bold text-sm"><i class="fa-brands fa-whatsapp"></i> Chat Now</a></div>
+<form onsubmit="submitContact(event)" class="mt-5 space-y-2"><p class="font-bold text-sm">Contact Us Form</p><input required placeholder="Your Name" class="w-full border rounded-xl px-3 py-2.5 text-sm"><input required placeholder="Phone Number" class="w-full border rounded-xl px-3 py-2.5 text-sm"><textarea required placeholder="Your message..." class="w-full border rounded-xl px-3 py-2.5 text-sm h-20"></textarea><button class="w-full bg-brand text-white py-3 rounded-full font-bold text-sm">Send Message →</button></form>
+</div>
+<div class="lg:col-span-3 rounded-[24px] overflow-hidden border bg-white relative min-h-[420px]"><iframe src="https://www.google.com/maps?q=Pakka%20Qila%20Shahi%20Bazar%20Hyderabad%20Pakistan&output=embed" class="absolute inset-0 w-full h-full border-0" loading="lazy"></iframe><div class="absolute bottom-4 left-4 bg-white rounded-2xl shadow-xl p-3 flex gap-3 items-center max-w-[320px]"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200" class="w-14 h-14 rounded-xl object-cover"><div><p class="font-extrabold text-sm leading-tight">Noman Burger — Pakka Qila</p><p class="text-xs text-zinc-500">Shahi Bazar, Hyderabad • 4.9 ★ (2.4k)</p><a href="https://www.google.com/maps/search/?api=1&query=Noman+Burger+Pakka+Qila+Hyderabad" target="_blank" class="text-brand text-xs font-bold">Open in Google Maps →</a></div></div></div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#12100E] text-white">
+<div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-8 text-sm">
+<div><p class="font-display text-3xl">NOMAN <span class="text-brand">BURGER</span></p><p class="text-white/60 mt-2">Fast Food & BBQ — Hyderabad's home of flame-grilled burgers, parathas, shawarma & broast since day one at Pakka Qila.</p><div class="flex gap-2 mt-4"><a href="https://wa.me/923122215100" target="_blank" class="w-9 h-9 rounded-full bg-white/10 grid place-items-center"><i class="fa-brands fa-whatsapp"></i></a><a href="tel:03122215100" class="w-9 h-9 rounded-full bg-white/10 grid place-items-center"><i class="fa-solid fa-phone"></i></a><span class="w-9 h-9 rounded-full bg-white/10 grid place-items-center"><i class="fa-brands fa-instagram"></i></span><span class="w-9 h-9 rounded-full bg-white/10 grid place-items-center"><i class="fa-brands fa-facebook-f"></i></span></div></div>
+<div><p class="font-bold mb-3">Quick Links</p><ul class="space-y-2 text-white/60"><li><a href="#menu">Full Menu</a></li><li><a href="#deals">Special Deals</a></li><li><a href="#gallery">Gallery</a></li><li><button onclick="trackOrderPrompt()">Track Your Order</button></li><li><button onclick="openAuth()">My Account / Orders</button></li></ul></div>
+<div><p class="font-bold mb-3">Legal & Help</p><ul class="space-y-2 text-white/60"><li><button onclick="openLegal('privacy')">Privacy Policy</button></li><li><button onclick="openLegal('terms')">Terms & Conditions</button></li><li><button onclick="openLegal('refund')">Refund & Cancellation</button></li><li><button onclick="openLegal('cookie')">Cookie Policy</button></li><li><button onclick="showCookie(true)">Cookie Preferences</button></li></ul></div>
+<div><p class="font-bold mb-3">Payments & Delivery</p><p class="text-white/60">Cash on Delivery • Cash at Shop<br>JazzCash • Easypaisa • Bank Transfer<br><span class="text-brand2 font-bold">Delivery: <span id="footDelivery">Rs.80</span> • Free over Rs.1,000</span></p><div class="flex gap-1.5 mt-3 flex-wrap"><span class="bg-white text-black text-[11px] font-bold px-2 py-1 rounded-md">COD</span><span class="bg-[#ED1C24] text-white text-[11px] font-bold px-2 py-1 rounded-md">JazzCash</span><span class="bg-emerald-600 text-white text-[11px] font-bold px-2 py-1 rounded-md">Easypaisa</span><span class="bg-zinc-700 text-white text-[11px] font-bold px-2 py-1 rounded-md">Bank</span></div><p class="mt-4 font-bold">0312 2215100</p><p class="text-white/50 text-xs">Shahi Bazar, Pakka Qila, Hyderabad</p></div>
+</div>
+<div class="border-t border-white/10"><div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-2 text-xs text-white/40"><span>© 2026 Noman Burger — Fast Food & BBQ. All rights reserved.</span><span>Admin Demo: admin@noman.com / admin123 • Guest checkout available</span></div></div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<a href="https://wa.me/923122215100?text=Assalamualaikum!%20I%20want%20to%20order%20from%20Noman%20Burger" target="_blank" class="fixed bottom-5 right-5 z-[60] bg-[#22c55e] text-white pl-3 pr-4 py-3 rounded-full shadow-2xl flex items-center gap-2 font-bold text-sm hover:scale-105 transition"><span class="w-8 h-8 bg-white text-[#22c55e] rounded-full grid place-items-center text-lg"><i class="fa-brands fa-whatsapp"></i></span><span class="hidden sm:block">Chat on WhatsApp<br><span class="text-[11px] font-medium opacity-90">0312 2215100 • Replies fast</span></span></a>
+<button onclick="toggleCart(true)" class="fixed bottom-5 left-5 z-[60] md:hidden bg-black text-white px-4 py-3 rounded-full shadow-2xl font-bold text-sm">🛒 View Cart • <span id="mobileCartTotal">Rs.0</span></button>
+
+<!-- CART DRAWER -->
+<div id="cartOverlay" onclick="toggleCart(false)" class="fixed inset-0 bg-black/50 backdrop-blur-[2px] z-[70] hidden"></div>
+<aside id="cartDrawer" class="drawer fixed top-0 right-0 h-full w-full max-w-[430px] bg-white z-[71] translate-x-full flex flex-col shadow-2xl">
+<div class="p-5 border-b flex justify-between items-center"><div><h3 class="font-display text-3xl leading-none">YOUR CART</h3><p class="text-xs text-zinc-500" id="cartMeta">0 items • Noman Burger, Hyderabad</p></div><button onclick="toggleCart(false)" class="w-9 h-9 rounded-full bg-zinc-100">✕</button></div>
+<div class="px-5 pt-4"><div class="bg-zinc-100 rounded-full p-1 grid grid-cols-2 text-sm font-bold"><button id="btnDelivery" onclick="setOrderType('Delivery')" class="py-2 rounded-full bg-black text-white">🛵 Delivery</button><button id="btnTakeaway" onclick="setOrderType('Takeaway')" class="py-2 rounded-full">🏪 Takeaway</button></div>
+<div class="flex gap-2 mt-3"><input id="promoInput" placeholder="Promo code (NOMAN10)" class="flex-1 border rounded-full px-4 py-2 text-sm uppercase"><button onclick="applyPromo(document.getElementById('promoInput').value)" class="bg-brand2 px-4 rounded-full font-bold text-sm">Apply</button></div><p id="promoMsg" class="text-xs font-bold mt-1"></p></div>
+<div id="cartItems" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+<div class="border-t p-5 space-y-2 text-sm bg-[#FFFBF5]">
+<div class="flex justify-between"><span class="text-zinc-500">Subtotal</span><b id="subTotal">Rs.0</b></div>
+<div class="flex justify-between"><span class="text-zinc-500">Delivery Charges</span><b id="delChargeText">Rs.80</b></div>
+<div class="flex justify-between text-emerald-600 font-bold hidden" id="discountRow"><span>Discount (NOMAN10)</span><span id="discountAmt">-Rs.0</span></div>
+<div class="flex justify-between text-lg font-extrabold border-t pt-2"><span>Total (PKR)</span><span id="grandTotal">Rs.0</span></div>
+<textarea id="orderNote" placeholder="Special instructions: e.g. extra spicy, no onion, less mayo..." class="w-full border rounded-xl p-3 text-sm h-[62px] bg-white"></textarea>
+<button onclick="openCheckout()" class="w-full bg-brand text-white py-3.5 rounded-full font-extrabold shadow-lg shadow-orange-500/25">Proceed to Checkout →</button>
+<button onclick="toggleCart(false);scrollToMenu()" class="w-full py-2 font-bold text-sm">+ Add More Items</button>
+<p class="text-center text-[11px] text-zinc-400">Cash on Delivery available • Secure checkout</p>
+</div>
+</aside>
+
+<!-- AUTH MODAL -->
+<div id="authModal" class="fixed inset-0 z-[80] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+<div class="bg-white w-full max-w-[920px] rounded-[24px] overflow-hidden grid md:grid-cols-2 fadeIn max-h-[92vh] overflow-y-auto">
+<div class="hidden md:block relative"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=80" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div><div class="absolute bottom-6 left-6 text-white"><p class="font-display text-4xl leading-none">JOIN NOMAN<br>CLUB 🍔</p><p class="text-white/70 text-sm mt-1">Order history, saved addresses,<br>faster checkout & exclusive deals.</p></div></div>
+<div class="p-6 md:p-7">
+<div class="flex justify-between items-start"><div><h3 id="authTitle" class="font-display text-3xl leading-none">WELCOME BACK</h3><p id="authSub" class="text-sm text-zinc-500">Login to your Noman Burger account</p></div><button onclick="closeAuth()" class="w-8 h-8 bg-zinc-100 rounded-full">✕</button></div>
+<div id="authMain">
+<div class="flex bg-zinc-100 rounded-full p-1 mt-5 text-sm font-bold"><button id="tabLogin" onclick="switchAuth('login')" class="flex-1 py-2 rounded-full bg-black text-white">Login</button><button id="tabSignup" onclick="switchAuth('signup')" class="flex-1 py-2 rounded-full">Sign Up</button></div>
+<form onsubmit="handleAuth(event)" class="space-y-3 mt-5">
+<input id="authNameField" placeholder="Full Name" class="w-full border rounded-xl px-4 py-3 text-sm hidden">
+<input id="authEmail" type="email" required placeholder="Email Address" class="w-full border rounded-xl px-4 py-3 text-sm">
+<input id="authPhone" placeholder="Phone (03xx-xxxxxxx)" class="w-full border rounded-xl px-4 py-3 text-sm hidden">
+<input id="authPass" type="password" required placeholder="Password" class="w-full border rounded-xl px-4 py-3 text-sm">
+<button class="w-full bg-brand text-white py-3.5 rounded-full font-extrabold" id="authSubmitBtn">Login →</button>
+</form>
+<div class="flex justify-between text-xs font-bold mt-3"><button onclick="showForgot()" class="text-brand">Forgot Password?</button><button onclick="guestCheckout()" class="underline">Continue as Guest →</button></div>
+<div class="mt-5 bg-amber-50 border border-amber-100 rounded-xl p-3 text-xs"><b>Demo Accounts:</b><br>Customer: any email + password (Sign Up)<br>Admin: <b>admin@noman.com / admin123</b> — opens Owner Panel</div>
+</div>
+<div id="forgotBox" class="hidden mt-5 space-y-3"><p class="font-bold">Reset Password</p><input id="forgotEmail" type="email" placeholder="Enter your email" class="w-full border rounded-xl px-4 py-3 text-sm"><button onclick="doForgot()" class="w-full bg-black text-white py-3 rounded-full font-bold text-sm">Send Reset Link</button><button onclick="hideForgot()" class="text-xs font-bold underline">← Back to Login</button><p id="forgotMsg" class="text-xs text-emerald-600 font-bold"></p></div>
+<div id="profileBox" class="hidden mt-5">
+<div class="flex items-center gap-3 bg-zinc-50 rounded-2xl p-3"><div class="w-12 h-12 rounded-full bg-brand text-white grid place-items-center font-display text-xl" id="profileInitial">A</div><div><p class="font-extrabold" id="profileName">Customer</p><p class="text-xs text-zinc-500" id="profileEmail">email</p></div><button onclick="logout()" class="ml-auto bg-black text-white text-xs px-3 py-2 rounded-full font-bold">Logout</button></div>
+<p class="font-bold text-sm mt-4">📍 Saved Addresses</p><div id="savedAddr" class="space-y-2 mt-2"></div><div class="flex gap-2 mt-2"><input id="newAddr" placeholder="Add new address in Hyderabad..." class="flex-1 border rounded-full px-3 py-2 text-sm"><button onclick="addAddress()" class="bg-brand text-white px-4 rounded-full text-sm font-bold">Save</button></div>
+<p class="font-bold text-sm mt-5">🧾 Order History</p><div id="orderHistory" class="space-y-2 mt-2"></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkoutModal" class="fixed inset-0 z-[85] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+<div class="bg-white w-full max-w-[560px] rounded-[24px] p-6 fadeIn max-h-[92vh] overflow-y-auto">
+<div class="flex justify-between"><div><h3 class="font-display text-3xl leading-none">CHECKOUT</h3><p class="text-sm text-zinc-500">Delivery details & payment — PKR</p></div><button onclick="closeCheckout()" class="w-8 h-8 bg-zinc-100 rounded-full">✕</button></div>
+<form onsubmit="placeOrder(event)" class="space-y-3 mt-5">
+<input id="coName" required placeholder="Full Name *" class="w-full border rounded-xl px-4 py-3 text-sm">
+<input id="coPhone" required placeholder="Phone / WhatsApp * (03xx)" class="w-full border rounded-xl px-4 py-3 text-sm">
+<textarea id="coAddress" placeholder="Complete Delivery Address (House, Street, Area, Hyderabad) *" class="w-full border rounded-xl px-4 py-3 text-sm h-[72px]"></textarea>
+<div class="grid grid-cols-2 gap-2 text-sm font-bold"><label class="border rounded-xl p-3 flex gap-2 cursor-pointer has-[:checked]:border-brand has-[:checked]:bg-orange-50"><input type="radio" name="otype" value="Delivery" checked onchange="setOrderType('Delivery')"> 🛵 Delivery</label><label class="border rounded-xl p-3 flex gap-2 cursor-pointer has-[:checked]:border-brand has-[:checked]:bg-orange-50"><input type="radio" name="otype" value="Takeaway" onchange="setOrderType('Takeaway')"> 🏪 Takeaway</label></div>
+<p class="font-bold text-sm pt-1">Payment Method</p><div id="paymentOptions" class="space-y-2"></div>
+<div class="bg-zinc-50 rounded-xl p-3 text-sm space-y-1"><div class="flex justify-between"><span>Items Total</span><b id="coSub">Rs.0</b></div><div class="flex justify-between"><span>Delivery</span><b id="coDel">Rs.80</b></div><div class="flex justify-between font-extrabold text-base border-t pt-1"><span>Total Payable</span><span id="coTotal">Rs.0</span></div></div>
+<button class="w-full bg-brand text-white py-3.5 rounded-full font-extrabold">✓ Place Order — Confirm</button>
+<p class="text-center text-[11px] text-zinc-400">By ordering you agree to our <button type="button" onclick="openLegal('terms')" class="underline">Terms</button> & <button type="button" onclick="openLegal('refund')" class="underline">Refund Policy</button>. Online payments activate after integration — COD is active.</p>
+</form>
+</div>
+</div>
+
+<!-- ORDER SUCCESS / TRACKING -->
+<div id="trackModal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+<div class="bg-white w-full max-w-[520px] rounded-[24px] p-6 fadeIn">
+<div class="text-center"><span class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full inline-grid place-items-center text-3xl">✓</span><h3 class="font-display text-3xl mt-2">ORDER CONFIRMED!</h3><p class="text-sm text-zinc-500">Order ID: <b id="trackOrderId" class="text-black">NB-1001</b> • <span id="trackEta">ETA 25-35 min</span></p></div>
+<div class="mt-6"><div class="flex justify-between text-[11px] font-bold"><span>Received</span><span>Preparing</span><span>On the Way</span><span>Delivered</span></div><div class="h-2.5 bg-zinc-100 rounded-full mt-1 overflow-hidden"><div id="trackBar" class="h-full bg-brand rounded-full transition-all duration-700" style="width:25%"></div></div><p id="trackStatusText" class="text-center font-bold text-sm mt-3 text-brand">Order Received — Kitchen will start soon</p></div>
+<div id="trackDetails" class="bg-zinc-50 rounded-xl p-4 text-sm mt-4 space-y-1"></div>
+<div class="flex gap-2 mt-5"><button onclick="closeTrack()" class="flex-1 border py-3 rounded-full font-bold text-sm">Continue Shopping</button><a id="trackWhats" href="#" target="_blank" class="flex-1 bg-[#22c55e] text-white text-center py-3 rounded-full font-bold text-sm">WhatsApp Restaurant</a></div>
+<p class="text-center text-xs text-zinc-400 mt-3">Live tracking simulation • Call 0312 2215100 for updates</p>
+</div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div id="adminLoginModal" class="fixed inset-0 z-[92] hidden items-center justify-center p-4 bg-black/70">
+<div class="bg-[#17130F] text-white w-full max-w-[420px] rounded-[24px] p-6 fadeIn border border-white/10">
+<p class="text-brand2 text-xs font-bold tracking-widest">🔐 SECURE OWNER ACCESS</p><h3 class="font-display text-3xl mt-1">ADMIN LOGIN</h3><p class="text-white/50 text-sm">Super Admin can create & manage other admins.</p>
+<form onsubmit="doAdminLogin(event)" class="space-y-3 mt-5"><input id="adminEmail" type="email" value="admin@noman.com" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white" placeholder="Admin Email"><input id="adminPass" type="password" value="admin123" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white" placeholder="Password"><button class="w-full bg-brand py-3.5 rounded-full font-extrabold">Login to Dashboard →</button></form>
+<button onclick="closeAdminLogin()" class="w-full text-center text-xs mt-3 text-white/50 underline">Cancel</button>
+</div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="fixed inset-0 z-[93] hidden bg-[#FFF8F0] overflow-y-auto">
+<div class="bg-[#12100E] text-white sticky top-0 z-10"><div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between gap-3 items-center"><div class="flex items-center gap-3"><span class="bg-brand px-3 py-1 rounded-full text-xs font-bold">SUPER ADMIN</span><p class="font-display text-2xl leading-none pt-1">NOMAN BURGER — OWNER CONTROL PANEL</p></div><div class="flex gap-2"><button onclick="closeAdmin()" class="bg-white text-black px-4 py-2 rounded-full text-sm font-bold">View Website</button><button onclick="adminLogout()" class="bg-red-600 px-4 py-2 rounded-full text-sm font-bold">Logout Admin</button></div></div>
+<div class="max-w-7xl mx-auto px-4 pb-3 flex gap-2 overflow-x-auto no-scrollbar text-sm font-bold"><button onclick="adminTab('dash',this)" class="admin-tab tab-active bg-white/10 px-4 py-2 rounded-full whitespace-nowrap">📊 Dashboard</button><button onclick="adminTab('menu',this)" class="admin-tab bg-white/10 px-4 py-2 rounded-full whitespace-nowrap">🍔 Menu Manager</button><button onclick="adminTab('orders',this)" class="admin-tab bg-white/10 px-4 py-2 rounded-full whitespace-nowrap">🧾 Orders</button><button onclick="adminTab('settings',this)" class="admin-tab bg-white/10 px-4 py-2 rounded-full whitespace-nowrap">⚙️ Website Settings</button><button onclick="adminTab('admins',this)" class="admin-tab bg-white/10 px-4 py-2 rounded-full whitespace-nowrap">👥 Admins & Permissions</button></div></div>
+
+<div class="max-w-7xl mx-auto px-4 py-6">
+<!-- DASH -->
+<div id="admin-dash" class="admin-section">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4"><div class="bg-white rounded-2xl border p-5"><p class="text-xs font-bold text-zinc-400">TODAY'S REVENUE</p><p class="font-display text-4xl mt-1" id="statRevenue">Rs.12,480</p><p class="text-emerald-600 text-xs font-bold">▲ 18% vs yesterday</p></div><div class="bg-white rounded-2xl border p-5"><p class="text-xs font-bold text-zinc-400">ORDERS TODAY</p><p class="font-display text-4xl mt-1" id="statOrders">47</p><p class="text-xs text-zinc-500">12 pending • 35 delivered</p></div><div class="bg-white rounded-2xl border p-5"><p class="text-xs font-bold text-zinc-400">MENU ITEMS LIVE</p><p class="font-display text-4xl mt-1" id="statItems">32</p><p class="text-xs text-zinc-500">7 categories active</p></div><div class="bg-white rounded-2xl border p-5"><p class="text-xs font-bold text-zinc-400">AVG RATING</p><p class="font-display text-4xl mt-1">4.9 ★</p><p class="text-xs text-zinc-500">2,418 customer reviews</p></div></div>
+<div class="grid lg:grid-cols-2 gap-4 mt-4"><div class="bg-white rounded-2xl border p-5"><h4 class="font-display text-2xl">RECENT ORDERS</h4><div id="adminRecentOrders" class="space-y-2 mt-3 text-sm"></div></div><div class="bg-[#12100E] text-white rounded-2xl p-5"><h4 class="font-display text-2xl text-brand2">QUICK ACTIONS — NO CODING NEEDED</h4><div class="grid grid-cols-2 gap-2 mt-4 text-sm font-bold"><button onclick="adminTab('menu',document.querySelectorAll('.admin-tab')[1])" class="bg-white/10 py-3 rounded-xl">+ Add New Dish</button><button onclick="adminTab('settings',document.querySelectorAll('.admin-tab')[3])" class="bg-white/10 py-3 rounded-xl">Change Prices / Delivery</button><button onclick="adminTab('settings',document.querySelectorAll('.admin-tab')[3])" class="bg-white/10 py-3 rounded-xl">Edit Homepage Banner</button><button onclick="adminTab('orders',document.querySelectorAll('.admin-tab')[2])" class="bg-brand py-3 rounded-xl">Manage Orders</button></div><p class="text-white/50 text-xs mt-4">Every change you save here instantly updates the live website menu, prices & images for customers.</p></div></div>
+</div>
+
+<!-- MENU MANAGER -->
+<div id="admin-menu" class="admin-section hidden">
+<div class="grid lg:grid-cols-3 gap-5">
+<form onsubmit="adminAddItem(event)" class="bg-white rounded-2xl border p-5 h-fit sticky top-24"><h4 class="font-display text-2xl">ADD / EDIT DISH</h4><p class="text-xs text-zinc-500 mb-3">Upload image or paste image URL. Leave price empty for “Price on Request”.</p>
+<input id="aiName" required placeholder="Dish Name *" class="w-full border rounded-xl px-3 py-2.5 text-sm mb-2">
+<select id="aiCat" class="w-full border rounded-xl px-3 py-2.5 text-sm mb-2"><option>Burgers</option><option>Fast Food</option><option>New Special Paratha</option><option>Dulhan Paratha</option><option>Halwa Puri</option><option>Shawarma</option><option>Other Items</option><option>BBQ & Grill</option></select>
+<input id="aiPrice" type="number" min="0" placeholder="Price PKR (blank = Price on Request)" class="w-full border rounded-xl px-3 py-2.5 text-sm mb-2">
+<input id="aiImg" placeholder="Image URL (https://...)" class="w-full border rounded-xl px-3 py-2.5 text-sm mb-2">
+<label class="block border-2 border-dashed rounded-xl p-3 text-center text-sm cursor-pointer bg-zinc-50">📷 Upload Food Photo<input type="file" accept="image/*" class="hidden" onchange="handleAdminUpload(event)"><span id="uploadName" class="block text-xs text-zinc-400 mt-1">JPG/PNG — replaces item image instantly</span></label>
+<img id="aiPreview" class="w-full h-32 object-cover rounded-xl mt-2 hidden">
+<textarea id="aiDesc" placeholder="Short description" class="w-full border rounded-xl px-3 py-2.5 text-sm mt-2 h-[60px]"></textarea>
+<label class="flex gap-2 text-sm font-bold mt-1"><input type="checkbox" id="aiPopular"> Mark as Popular ★</label>
+<button class="w-full bg-brand text-white py-3 rounded-full font-bold text-sm mt-3">✓ Save Dish to Live Menu</button>
+<button type="button" onclick="resetAdminForm()" class="w-full text-xs font-bold underline mt-2">Clear / Add New</button>
+<input type="hidden" id="aiEditId">
+</form>
+<div class="lg:col-span-2 bg-white rounded-2xl border p-5"><div class="flex justify-between gap-2 flex-wrap"><h4 class="font-display text-2xl">LIVE MENU ITEMS (<span id="adminItemCount"></span>)</h4><input oninput="renderAdminMenu(this.value)" placeholder="Search admin menu..." class="border rounded-full px-4 py-2 text-sm"></div><div id="adminMenuList" class="divide-y mt-2"></div></div>
+</div>
+</div>
+
+<!-- ORDERS ADMIN -->
+<div id="admin-orders" class="admin-section hidden"><div class="bg-white rounded-2xl border p-5"><h4 class="font-display text-2xl">ALL ORDERS — MANAGE STATUS</h4><div id="adminOrdersList" class="space-y-3 mt-4"></div></div></div>
+
+<!-- SETTINGS -->
+<div id="admin-settings" class="admin-section hidden">
+<div class="grid lg:grid-cols-2 gap-5">
+<div class="bg-white rounded-2xl border p-5 space-y-3"><h4 class="font-display text-2xl">WEBSITE SETTINGS</h4>
+<label class="text-xs font-bold">HOMEPAGE HERO TITLE</label><input id="setHero" class="w-full border rounded-xl px-3 py-2.5 text-sm" value="TASTE THE REAL FLAME BURGER & BBQ">
+<label class="text-xs font-bold">RESTAURANT PHONE / WHATSAPP</label><input id="setPhone" class="w-full border rounded-xl px-3 py-2.5 text-sm" value="0312 2215100">
+<label class="text-xs font-bold">DELIVERY CHARGE (PKR)</label><input id="setDelivery" type="number" class="w-full border rounded-xl px-3 py-2.5 text-sm" value="80">
+<label class="text-xs font-bold">FREE DELIVERY ABOVE (PKR)</label><input id="setFree" type="number" class="w-full border rounded-xl px-3 py-2.5 text-sm" value="1000">
+<label class="text-xs font-bold">OPENING HOURS TEXT</label><input id="setHours" class="w-full border rounded-xl px-3 py-2.5 text-sm" value="Mon – Sun: 11:00 AM – 2:00 AM">
+<label class="text-xs font-bold">WEBSITE ACCENT COLOR</label><div class="flex gap-2"><button onclick="setTheme('#FF5A00')" class="w-10 h-10 rounded-full bg-[#FF5A00] border-2 border-black"></button><button onclick="setTheme('#E11D48')" class="w-10 h-10 rounded-full bg-rose-600"></button><button onclick="setTheme('#16A34A')" class="w-10 h-10 rounded-full bg-green-600"></button><button onclick="setTheme('#7C3AED')" class="w-10 h-10 rounded-full bg-violet-600"></button><span class="text-sm self-center font-bold" id="themeLabel">#FF5A00 Orange (Default)</span></div>
+<button onclick="saveSettings()" class="w-full bg-black text-white py-3 rounded-full font-bold text-sm">💾 Save & Publish Settings</button></div>
+<div class="bg-white rounded-2xl border p-5"><h4 class="font-display text-2xl">PAYMENT METHODS</h4><p class="text-xs text-zinc-500 mb-3">Toggle methods shown at checkout. Online methods need integration before activation.</p><div id="payToggles" class="space-y-2"></div>
+<div class="mt-5"><h4 class="font-display text-2xl">OFFERS & PROMO</h4><div class="bg-amber-50 rounded-xl p-3 text-sm mt-2 flex justify-between"><span><b>NOMAN10</b> — 10% OFF over Rs.800</span><span class="text-emerald-600 font-bold">ACTIVE</span></div><div class="flex gap-2 mt-2"><input id="newPromo" placeholder="New code e.g. BBQ20" class="flex-1 border rounded-full px-3 py-2 text-sm uppercase"><button onclick="addPromo()" class="bg-brand text-white px-4 rounded-full text-sm font-bold">Create</button></div></div>
+<div class="mt-5"><h4 class="font-display text-2xl">CATEGORIES</h4><div class="flex flex-wrap gap-1.5 mt-2" id="adminCats"></div><div class="flex gap-2 mt-2"><input id="newCatInput" placeholder="New category name" class="flex-1 border rounded-full px-3 py-2 text-sm"><button onclick="addCategory()" class="bg-black text-white px-4 rounded-full text-sm font-bold">+ Add</button></div></div>
+</div>
+</div>
+</div>
+
+<!-- ADMINS -->
+<div id="admin-admins" class="admin-section hidden"><div class="grid lg:grid-cols-2 gap-5"><div class="bg-white rounded-2xl border p-5"><h4 class="font-display text-2xl">ADMIN ACCOUNTS (SUPER ADMIN ONLY)</h4><div id="adminUsersList" class="space-y-2 mt-3"></div></div><form onsubmit="createAdmin(event)" class="bg-white rounded-2xl border p-5 h-fit"><h4 class="font-display text-2xl">CREATE NEW ADMIN</h4><input id="naName" required placeholder="Admin Name" class="w-full border rounded-xl px-3 py-2.5 text-sm mt-3 mb-2"><input id="naEmail" required type="email" placeholder="Admin Email" class="w-full border rounded-xl px-3 py-2.5 text-sm mb-2"><select id="naRole" class="w-full border rounded-xl px-3 py-2.5 text-sm mb-2"><option>Manager</option><option>Menu Editor</option><option>Order Manager</option><option>Super Admin</option></select><div class="flex flex-wrap gap-2 text-xs font-bold"><label class="bg-zinc-100 px-2 py-1 rounded-full"><input type="checkbox" checked> Menu</label><label class="bg-zinc-100 px-2 py-1 rounded-full"><input type="checkbox" checked> Orders</label><label class="bg-zinc-100 px-2 py-1 rounded-full"><input type="checkbox"> Payments</label><label class="bg-zinc-100 px-2 py-1 rounded-full"><input type="checkbox"> Settings</label></div><button class="w-full bg-brand text-white py-3 rounded-full font-bold text-sm mt-4">Create Admin Account</button></form></div></div>
+
+</div>
+</div>
+
+<!-- LEGAL MODAL -->
+<div id="legalModal" class="fixed inset-0 z-[95] hidden items-center justify-center p-4 bg-black/60"><div class="bg-white w-full max-w-[680px] rounded-[24px] p-6 md:p-8 max-h-[88vh] overflow-y-auto fadeIn"><div class="flex justify-between"><h3 id="legalTitle" class="font-display text-3xl"></h3><button onclick="closeLegal()" class="w-8 h-8 bg-zinc-100 rounded-full shrink-0">✕</button></div><div id="legalBody" class="text-sm text-zinc-600 leading-relaxed mt-3 space-y-3"></div><button onclick="closeLegal()" class="mt-5 bg-black text-white px-6 py-2.5 rounded-full font-bold text-sm">I Understand</button></div></div>
+
+<!-- QUICK VIEW -->
+<div id="quickModal" class="fixed inset-0 z-[88] hidden items-center justify-center p-4 bg-black/60"><div class="bg-white w-full max-w-[760px] rounded-[24px] overflow-hidden grid md:grid-cols-2 fadeIn"><img id="qImg" class="w-full h-64 md:h-full object-cover"><div class="p-6"><div class="flex justify-between"><span id="qCat" class="bg-orange-100 text-brand text-xs font-bold px-2 py-1 rounded-full"></span><button onclick="closeQuick()" class="w-8 h-8 bg-zinc-100 rounded-full">✕</button></div><h3 id="qName" class="font-display text-4xl leading-none mt-3"></h3><p class="text-amber-500 font-bold text-sm mt-1" id="qRating"></p><p id="qDesc" class="text-sm text-zinc-500 mt-2"></p><p id="qPrice" class="font-display text-4xl mt-4"></p><div class="flex items-center gap-3 mt-4"><div class="flex items-center border rounded-full overflow-hidden"><button onclick="qQtyChange(-1)" class="w-9 h-9 font-bold">−</button><span id="qQty" class="w-8 text-center font-bold">1</span><button onclick="qQtyChange(1)" class="w-9 h-9 font-bold">+</button></div><button id="qAddBtn" class="flex-1 bg-brand text-white py-3 rounded-full font-extrabold text-sm">Add to Cart</button></div><a id="qWhats" target="_blank" class="block text-center mt-2 bg-[#22c55e] text-white py-3 rounded-full font-bold text-sm">Order on WhatsApp</a><p class="text-[11px] text-zinc-400 mt-3">✓ Freshly prepared • Hygienic kitchen • Pakka Qila, Hyderabad</p></div></div></div>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" class="fixed bottom-4 left-4 right-4 md:right-auto md:max-w-[460px] z-[96] bg-[#12100E] text-white rounded-[20px] p-5 shadow-2xl hidden">
+<p class="font-display text-xl">🍪 WE VALUE YOUR PRIVACY</p><p class="text-white/60 text-[13px] mt-1">We use cookies to improve ordering, remember your cart & analyse traffic. Read our <button onclick="openLegal('cookie')" class="underline text-brand2">Cookie Policy</button>.</p>
+<div id="cookiePrefs" class="hidden mt-3 space-y-2 text-sm"><label class="flex justify-between bg-white/5 rounded-lg px-3 py-2">Essential (Required) <input type="checkbox" checked disabled></label><label class="flex justify-between bg-white/5 rounded-lg px-3 py-2">Analytics <input type="checkbox" id="ckAnalytics" checked></label><label class="flex justify-between bg-white/5 rounded-lg px-3 py-2">Marketing <input type="checkbox" id="ckMarketing"></label></div>
+<div class="flex gap-2 mt-4"><button onclick="cookieChoice('accepted')" class="flex-1 bg-brand py-2.5 rounded-full font-bold text-sm">Accept All</button><button onclick="cookieChoice('rejected')" class="flex-1 bg-white/10 py-2.5 rounded-full font-bold text-sm">Reject</button><button onclick="document.getElementById('cookiePrefs').classList.toggle('hidden')" class="px-3 bg-white text-black rounded-full font-bold text-sm">Manage</button></div>
+</div>
+
+<div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[100] hidden bg-black text-white px-5 py-3 rounded-full font-bold text-sm shadow-2xl items-center gap-2"></div>
+
+<script>
+// ============ DATA ============
+let categories=["All","Burgers","Fast Food","New Special Paratha","Dulhan Paratha","Halwa Puri","Shawarma","Other Items","BBQ & Grill"];
+let menu=[
+{id:1,name:"BBQ Boti Burger",cat:"Burgers",price:250,img:"https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800&q=80",desc:"Smoky BBQ chicken boti, special sauce, fresh bun — signature taste.",popular:true,rating:"4.9 (312)"},
+{id:2,name:"Chicken Burger",cat:"Burgers",price:220,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",desc:"Crispy chicken patty, lettuce, mayo & cheese in toasted bun.",popular:true,rating:"4.8 (428)"},
+{id:3,name:"Mayo Burger",cat:"Burgers",price:160,img:"https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800&q=80",desc:"Extra creamy mayo, juicy patty — kids & mayo lovers favourite.",popular:false,rating:"4.7 (189)"},
+{id:4,name:"Simple Burger",cat:"Burgers",price:110,img:"https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=80",desc:"Classic simple burger, fresh & budget-friendly everyday bite.",popular:false,rating:"4.6 (256)"},
+{id:5,name:"Sandwich",cat:"Burgers",price:70,img:"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&q=80",desc:"Light grilled sandwich — perfect tea-time snack.",popular:false,rating:"4.5 (98)"},
+{id:6,name:"Zinger Burger",cat:"Fast Food",price:320,img:"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800&q=80",desc:"Crispy fried chicken thigh, spicy coating, zinger sauce.",popular:true,rating:"4.9 (612)"},
+{id:7,name:"Special Zinger",cat:"Fast Food",price:400,img:"https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=800&q=80",desc:"Double sauce, cheese & extra crispy — Noman special recipe.",popular:true,rating:"4.9 (341)"},
+{id:8,name:"Jambo Zinger",cat:"Fast Food",price:550,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80",desc:"Jumbo size zinger for big hunger — double fillet, full loaded.",popular:true,rating:"4.8 (274)"},
+{id:9,name:"Zinger Cheese",cat:"Fast Food",price:400,img:"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=800&q=80",desc:"Melting cheese slice over crispy zinger fillet.",popular:false,rating:"4.8 (203)"},
+{id:10,name:"Broast",cat:"Fast Food",price:480,img:"https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=800&q=80",desc:"Golden crispy broast chicken — juicy inside, crunchy outside.",popular:true,rating:"4.9 (501)"},
+{id:11,name:"Pizza Paratha",cat:"New Special Paratha",price:320,img:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",desc:"Desi pizza twist — cheese, chicken & pizza sauce in paratha.",popular:true,rating:"4.8 (167)"},
+{id:12,name:"Ch Cheese Paratha",cat:"New Special Paratha",price:320,img:"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80",desc:"Chicken & cheese stuffed crispy paratha, served hot.",popular:false,rating:"4.7 (143)"},
+{id:13,name:"Dulhan Paratha",cat:"Dulhan Paratha",price:320,img:"https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=800&q=80",desc:"Famous Dulhan Paratha — layered, stuffed & full of flavour.",popular:true,rating:"4.9 (389)"},
+{id:14,name:"Dulhan Paratha Special",cat:"Dulhan Paratha",price:600,img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80",desc:"Premium special dulhan paratha — extra filling, malai & cheese.",popular:true,rating:"5.0 (212)"},
+{id:15,name:"Halwa Puri",cat:"Halwa Puri",price:40,img:"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=800&q=80",desc:"Traditional halwa puri nashta — fresh puri with sweet halwa.",popular:false,rating:"4.8 (176)"},
+{id:16,name:"Halwa",cat:"Halwa Puri",price:50,img:"https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&q=80",desc:"Sweet suji halwa — desi ghee aroma, perfect with puri.",popular:false,rating:"4.7 (88)"},
+{id:17,name:"BBQ Shawarma",cat:"Shawarma",price:200,img:"https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=80",desc:"BBQ chicken strips, smoky sauce wrapped in soft pita.",popular:true,rating:"4.8 (294)"},
+{id:18,name:"Cheese Shawarma",cat:"Shawarma",price:160,img:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&q=80",desc:"Cheesy shawarma wrap with tender chicken & garlic sauce.",popular:false,rating:"4.7 (158)"},
+{id:19,name:"Garlic Shawarma",cat:"Shawarma",price:130,img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800&q=80",desc:"Strong garlic sauce, juicy chicken — garlic lovers choice.",popular:false,rating:"4.6 (121)"},
+{id:20,name:"Shawarma",cat:"Shawarma",price:120,img:"https://images.unsplash.com/photo-1541518763669-27fef04b14ea?w=800&q=80",desc:"Classic chicken shawarma — fresh, saucy & satisfying.",popular:true,rating:"4.8 (367)"},
+{id:21,name:"Club Sandwich",cat:"Other Items",price:null,img:"https://images.unsplash.com/photo-1509722747041-616f39b57569?w=800&q=80",desc:"Triple-layer club sandwich with chicken, egg & fries side.",popular:true,rating:"4.8 (231)"},
+{id:22,name:"Cheese Zinger",cat:"Other Items",price:null,img:"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=800&q=80",desc:"Cheese-loaded zinger burger — extra melt in every bite.",popular:false,rating:"4.7 (140)"},
+{id:23,name:"Zinger Club",cat:"Other Items",price:null,img:"https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=800&q=80",desc:"Zinger + club sandwich fusion — huge & loaded.",popular:false,rating:"4.7 (97)"},
+{id:24,name:"Jumbo Zinger",cat:"Other Items",price:null,img:"https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800&q=80",desc:"Jumbo zinger — bigger fillet, bigger bun, bigger flavour.",popular:false,rating:"4.8 (115)"},
+{id:25,name:"Cheese Paratha",cat:"Other Items",price:null,img:"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80",desc:"Cheese stuffed paratha — crispy outside, gooey inside.",popular:false,rating:"4.6 (84)"},
+{id:26,name:"Chicken Roll",cat:"Other Items",price:null,img:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&q=80",desc:"Chicken roll paratha — spicy chicken wrapped fresh.",popular:true,rating:"4.8 (206)"},
+{id:27,name:"Zinger Roll",cat:"Other Items",price:null,img:"https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=80",desc:"Crispy zinger strips rolled in paratha with sauce.",popular:false,rating:"4.7 (132)"},
+{id:28,name:"Chicken Boti",cat:"BBQ & Grill",price:null,img:"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",desc:"Char-grilled chicken boti — smoky, tender & spicy.",popular:true,rating:"4.9 (278)"},
+{id:29,name:"Malai Tikka",cat:"BBQ & Grill",price:null,img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=800&q=80",desc:"Creamy malai tikka — soft, juicy & mildly spiced.",popular:true,rating:"4.9 (194)"},
+{id:30,name:"Malai Boti",cat:"BBQ & Grill",price:null,img:"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800&q=80",desc:"Malai boti skewers — melt-in-mouth BBQ delight.",popular:false,rating:"4.8 (149)"},
+{id:31,name:"Seekh Kabab",cat:"BBQ & Grill",price:null,img:"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800&q=80",desc:"Traditional seekh kabab — minced, spiced & coal-grilled.",popular:true,rating:"4.9 (322)"},
+{id:32,name:"Gola Kabab",cat:"BBQ & Grill",price:null,img:"https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",desc:"Soft gola kabab — round, juicy & full of BBQ aroma.",popular:false,rating:"4.7 (108)"},
+{id:33,name:"Fries",cat:"Other Items",price:null,img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&q=80",desc:"Crispy golden fries — salted, hot & perfect side.",popular:true,rating:"4.7 (445)"},
+];
+let cart={}; let dealsCart={}; let activeCat="All"; let searchQ=""; let orderType="Delivery";
+let settings={delivery:80,freeAbove:1000,payments:{cod:true,cashShop:true,jazz:false,easypaisa:false,bank:false}};
+let promoApplied=false; let currentUser=null; let isAdmin=false; let orders=[
+{id:"NB-7841",customer:"Ahmed Khan",phone:"0321-xxxxxxx",items:"2x Zinger Burger, 1x Fries",total:890,status:"Preparing",type:"Delivery",pay:"COD",date:"Today, 1:24 PM"},
+{id:"NB-7840",customer:"Fatima S.",phone:"0333-xxxxxxx",items:"1x Dulhan Paratha Special, 1x Shawarma",total:720,status:"Delivered",type:"Takeaway",pay:"Cash at Shop",date:"Today, 12:10 PM"},
+{id:"NB-7839",customer:"Bilal M.",phone:"0312-xxxxxxx",items:"Family BBQ Feast Deal",total:1499,status:"On the Way",type:"Delivery",pay:"COD",date:"Today, 11:48 AM"},
+];
+let userOrders=[]; let savedAddresses=["House 12, Shahi Bazar, Pakka Qila, Hyderabad"];
+let reviews=[
+{name:"Ahmed Raza",area:"Pakka Qila",stars:5,text:"Best Zinger in Hyderabad! Crispy, juicy and the BBQ Boti Burger is next level. Delivery was super fast.",item:"Zinger Burger"},
+{name:"Fatima Khan",area:"Latifabad",stars:5,text:"Dulhan Paratha Special is a must-try. My whole family loved it. Hygienic packing & polite staff on WhatsApp.",item:"Dulhan Paratha Special"},
+{name:"Bilal Sheikh",area:"Qasimabad",stars:5,text:"Broast tastes like big brands but at honest price Rs.480. Seekh Kabab also amazing. Highly recommended!",item:"Broast & Seekh Kabab"},
+];
+let admins=[{name:"Noman (Owner)",email:"admin@noman.com",role:"Super Admin",perms:"All Access"},{name:"Ali Manager",email:"manager@noman.com",role:"Manager",perms:"Orders, Menu"}];
+let currentQuickId=null, qQtyVal=1; let trackTimer=null;
+
+const fmt=n=>"Rs."+Number(n).toLocaleString('en-PK');
+function toast(msg){let t=document.getElementById('toast');t.innerHTML=msg;t.classList.remove('hidden');t.classList.add('flex');setTimeout(()=>{t.classList.add('hidden');t.classList.remove('flex')},2600)}
+function scrollToMenu(){document.getElementById('menu').scrollIntoView({behavior:'smooth'})}
+function handleSearch(v){searchQ=v.toLowerCase();renderMenu()}
+function clearFilters(){activeCat="All";searchQ="";document.getElementById('navSearch').value="";renderCats();renderMenu()}
+function scrollPopular(d){document.getElementById('popularRow').scrollBy({left:d*320,behavior:'smooth'})}
+function openDeals(){document.getElementById('deals').scrollIntoView({behavior:'smooth'})}
+
+// CATEGORIES
+function renderCats(){
+ document.getElementById('catBar').innerHTML=categories.map(c=>`<button onclick="setCat('${c}')" class="whitespace-nowrap text-[13px] font-bold px-3.5 py-1.5 rounded-full border ${activeCat===c?'bg-black text-white border-black':'hover:border-brand'}">${c==='All'?'🍽️ All Items':c}</button>`).join('');
+ document.getElementById('filterPills').innerHTML=categories.map(c=>`<button onclick="setCat('${c}')" class="whitespace-nowrap px-4 py-2 rounded-full border text-sm font-bold bg-white ${activeCat===c?'cat-active':''}">${c} ${c!=='All'?`<span class="opacity-60 text-xs">(${menu.filter(m=>m.cat===c).length})</span>`:''}</button>`).join('');
+ document.getElementById('adminCats').innerHTML=categories.filter(c=>c!=='All').map(c=>`<span class="bg-zinc-100 px-3 py-1 rounded-full text-xs font-bold">${c}</span>`).join('');
+}
+function setCat(c){activeCat=c;renderCats();renderMenu();scrollToMenu()}
+
+// MENU RENDER
+function renderMenu(){
+ let list=menu.filter(m=>(activeCat==="All"||m.cat===activeCat)&&(m.name.toLowerCase().includes(searchQ)||m.cat.toLowerCase().includes(searchQ)));
+ let pf=document.getElementById('priceFilter').value;
+ if(pf==="under200") list=list.filter(m=>m.price&&m.price<200); if(pf==="200-400") list=list.filter(m=>m.price>=200&&m.price<=400); if(pf==="400+") list=list.filter(m=>m.price>400);
+ let s=document.getElementById('sortSel').value;
+ if(s==="low") list.sort((a,b)=>(a.price||9999)-(b.price||9999)); if(s==="high") list.sort((a,b)=>(b.price||0)-(a.price||0)); if(s==="name") list.sort((a,b)=>a.name.localeCompare(b.name)); if(s==="pop") list.sort((a,b)=>(b.popular-a.popular));
+ document.getElementById('resultCount').textContent=`Showing ${list.length} items • Category: ${activeCat} • Prices in PKR`;
+ document.getElementById('emptyState').classList.toggle('hidden',list.length>0);
+ document.getElementById('menuGrid').innerHTML=list.map(m=>cardHTML(m)).join('');
+ renderPopular();
+}
+function cardHTML(m){
+ let inCart=cart[m.id]||0;
+ return `<article class="menu-card bg-white border rounded-[20px] overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300 fadeIn">
+ <div class="relative overflow-hidden cursor-pointer" onclick="openQuick(${m.id})"><img src="${m.img}" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80'" class="card-img w-full h-[150px] md:h-[175px] object-cover"><span class="absolute top-2 left-2 bg-black/80 text-white text-[10px] font-bold px-2 py-1 rounded-full">${m.cat}</span>${m.popular?`<span class="absolute top-2 right-2 bg-brand2 text-black text-[10px] font-extrabold px-2 py-1 rounded-full">★ POPULAR</span>`:''}<span class="absolute bottom-2 left-2 bg-white/95 text-[11px] font-bold px-2 py-0.5 rounded-full">★ ${m.rating}</span></div>
+ <div class="p-3 md:p-4"><h3 class="font-extrabold leading-tight text-[15px] md:text-base cursor-pointer hover:text-brand" onclick="openQuick(${m.id})">${m.name}</h3><p class="text-zinc-500 text-xs line-clamp-2 mt-1 h-[32px]">${m.desc}</p>
+ <div class="flex items-center justify-between mt-3"><div>${m.price?`<p class="font-display text-[22px] leading-none">${fmt(m.price)}</p><p class="text-[10px] text-zinc-400 font-bold">PKR • INCL. TAX</p>`:`<p class="font-display text-[18px] leading-none text-brand">PRICE ON REQUEST</p><p class="text-[10px] text-zinc-400 font-bold">ASK ON WHATSAPP</p>`}</div>
+ ${m.price? (inCart?`<div class="flex items-center bg-black text-white rounded-full overflow-hidden"><button onclick="changeQty(${m.id},-1)" class="w-8 h-9 font-bold">−</button><span class="w-6 text-center text-sm font-bold">${inCart}</span><button onclick="changeQty(${m.id},1)" class="w-8 h-9 font-bold">+</button></div>`:`<button onclick="addToCart(${m.id})" class="bg-brand hover:bg-orange-600 text-white font-extrabold text-sm px-4 py-2.5 rounded-full shadow-md shadow-orange-500/25">Add +</button>`) : `<a target="_blank" href="https://wa.me/923122215100?text=${encodeURIComponent('Assalamualaikum! What is the price of '+m.name+' at Noman Burger?')}" class="bg-[#22c55e] text-white font-bold text-xs px-3 py-2.5 rounded-full">💬 Ask Price</a>`}
+ </div></div></article>`
+}
+function renderPopular(){
+ let pop=menu.filter(m=>m.popular);
+ document.getElementById('popularRow').innerHTML=pop.map(m=>`<div class="min-w-[260px] md:min-w-[300px] snap-start bg-white rounded-[20px] border overflow-hidden flex gap-3 p-3 hover:shadow-lg transition cursor-pointer" onclick="openQuick(${m.id})"><img src="${m.img}" class="w-[92px] h-[92px] rounded-2xl object-cover shrink-0"><div class="flex-1 min-w-0"><p class="text-[10px] font-bold text-brand tracking-wider">${m.cat.toUpperCase()}</p><h4 class="font-extrabold leading-tight truncate">${m.name}</h4><p class="text-xs text-amber-500 font-bold">★★★★★ ${m.rating}</p><div class="flex justify-between items-center mt-2"><b>${m.price?fmt(m.price):'On Request'}</b>${m.price?`<button onclick="event.stopPropagation();addToCart(${m.id})" class="bg-black text-white text-xs px-3 py-1.5 rounded-full font-bold">Add +</button>`:`<span class="text-[11px] font-bold text-emerald-600">WhatsApp →</span>`}</div></div></div>`).join('');
+ // gallery
+ let gal=[...menu.slice(0,8)];
+ document.getElementById('galleryGrid').innerHTML=gal.map(m=>`<div class="relative rounded-2xl overflow-hidden group cursor-pointer h-[110px] md:h-[150px]" onclick="openQuick(${m.id})"><img src="${m.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"><div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-2"><p class="text-white text-xs font-bold">${m.name}<br><span class="text-brand2">${m.price?fmt(m.price):'Price on Request'}</span></p></div></div>`).join('');
+ // reviews
+ document.getElementById('reviewGrid').innerHTML=reviews.map(r=>`<div class="border rounded-2xl p-4 bg-[#FFFBF5]"><div class="flex gap-3"><span class="w-10 h-10 rounded-full bg-brand text-white grid place-items-center font-display text-lg shrink-0">${r.name[0]}</span><div><p class="font-extrabold text-sm">${r.name}</p><p class="text-[11px] text-zinc-400">${r.area} • Ordered: ${r.item}</p></div><span class="ml-auto text-amber-500 text-sm">${'★'.repeat(r.stars)}</span></div><p class="text-sm text-zinc-600 mt-3 leading-relaxed">“${r.text}”</p><p class="text-[11px] font-bold text-emerald-600 mt-2">✓ Verified Order</p></div>`).join('');
+}
+
+// CART
+function addToCart(id,qty=1){cart[id]=(cart[id]||0)+qty;updateCart();renderMenu();toast(`✅ Added to cart — ${menu.find(m=>m.id===id).name}`)}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0) delete cart[id];updateCart();renderMenu()}
+function addDeal(name,price){let key='deal_'+name;dealsCart[key]={name,price,qty:(dealsCart[key]?.qty||0)+1};updateCart();toast(`🎉 Deal added: ${name} — ${fmt(price)}`);toggleCart(true)}
+function removeDeal(key){delete dealsCart[key];updateCart()}
+function cartCountTotal(){let c=Object.values(cart).reduce((a,b)=>a+b,0)+Object.values(dealsCart).reduce((a,b)=>a+b.qty,0);let sub=Object.entries(cart).reduce((s,[id,q])=>{let m=menu.find(x=>x.id==id);return s+(m?m.price*q:0)},0)+Object.values(dealsCart).reduce((s,d)=>s+d.price*d.qty,0);return{c,sub}}
+function deliveryCharge(sub){if(orderType==="Takeaway")return 0;if(sub>=settings.freeAbove&&sub>0)return 0;return sub===0?0:settings.delivery}
+function updateCart(){
+ let {c,sub}=cartCountTotal(); let del=deliveryCharge(sub); let disc=promoApplied&&sub>=800?Math.round(sub*0.10):0; if(promoApplied&&sub<800) disc=0;
+ let total=sub+del-disc;
+ document.getElementById('cartCount').textContent=c; document.getElementById('cartTotalBadge').textContent=fmt(sub); document.getElementById('mobileCartTotal').textContent=fmt(total);
+ document.getElementById('cartMeta').textContent=`${c} items • ${orderType} • Noman Burger, Hyderabad`;
+ document.getElementById('subTotal').textContent=fmt(sub); document.getElementById('delChargeText').textContent=del===0?(sub>0?'FREE 🎉':fmt(0)):fmt(del);
+ document.getElementById('discountRow').classList.toggle('hidden',disc===0); document.getElementById('discountAmt').textContent='-'+fmt(disc);
+ document.getElementById('grandTotal').textContent=fmt(total);
+ document.getElementById('coSub').textContent=fmt(sub); document.getElementById('coDel').textContent=fmt(del); document.getElementById('coTotal').textContent=fmt(total);
+ let html='';
+ Object.entries(cart).forEach(([id,q])=>{let m=menu.find(x=>x.id==id);if(!m)return;html+=`<div class="flex gap-3 bg-zinc-50 rounded-2xl p-2.5 border"><img src="${m.img}" class="w-16 h-16 rounded-xl object-cover"><div class="flex-1 min-w-0"><div class="flex justify-between gap-2"><p class="font-extrabold text-sm leading-tight">${m.name}</p><button onclick="changeQty(${m.id},-999)" class="text-red-500 text-xs">✕</button></div><p class="text-xs text-zinc-400">${m.cat} • ${fmt(m.price)}</p><div class="flex justify-between items-center mt-1"><div class="flex items-center bg-white border rounded-full"><button onclick="changeQty(${m.id},-1)" class="w-7 h-7 font-bold">−</button><b class="w-6 text-center text-sm">${q}</b><button onclick="changeQty(${m.id},1)" class="w-7 h-7 font-bold">+</button></div><b class="text-sm">${fmt(m.price*q)}</b></div></div></div>`});
+ Object.entries(dealsCart).forEach(([k,d])=>{html+=`<div class="flex justify-between bg-orange-50 border border-orange-100 rounded-2xl p-3"><div><p class="font-extrabold text-sm">🎁 ${d.name}</p><p class="text-xs text-zinc-500">${fmt(d.price)} × ${d.qty}</p></div><div class="text-right"><b>${fmt(d.price*d.qty)}</b><br><button onclick="removeDeal('${k}')" class="text-red-500 text-xs font-bold">Remove</button></div></div>`});
+ document.getElementById('cartItems').innerHTML=html||`<div class="text-center py-14"><p class="text-6xl">🛒</p><p class="font-display text-2xl mt-2">YOUR CART IS EMPTY</p><p class="text-sm text-zinc-500">Add some delicious burgers & BBQ!</p><button onclick="toggleCart(false);scrollToMenu()" class="mt-4 bg-brand text-white px-6 py-2.5 rounded-full font-bold text-sm">Browse Menu</button></div>`;
+ renderPayments();
+}
+function setOrderType(t){orderType=t;document.getElementById('btnDelivery').className='py-2 rounded-full '+(t==='Delivery'?'bg-black text-white':'');document.getElementById('btnTakeaway').className='py-2 rounded-full '+(t==='Takeaway'?'bg-black text-white':'');updateCart()}
+function toggleCart(open){document.getElementById('cartDrawer').style.transform=open?'translateX(0)':'translateX(100%)';document.getElementById('cartOverlay').classList.toggle('hidden',!open);if(open)updateCart()}
+function applyPromo(code){code=(code||'').trim().toUpperCase();if(code==='NOMAN10'){promoApplied=true;document.getElementById('promoMsg').innerHTML='<span class="text-emerald-600">✓ NOMAN10 applied — 10% OFF over Rs.800</span>';toast('🎟️ Promo applied: 10% OFF')}else{document.getElementById('promoMsg').innerHTML='<span class="text-red-500">Invalid code. Try NOMAN10</span>'}updateCart()}
+
+// PAYMENTS
+function renderPayments(){
+ let opts=[
+ {k:'cod',icon:'💵',t:'Cash on Delivery',d:'Pay when your order arrives'},
+ {k:'cashShop',icon:'🏪',t:'Cash at Shop',d:'Pay at counter — Takeaway / Dine'},
+ {k:'jazz',icon:'📱',t:'JazzCash',d:settings.payments.jazz?'Pay via JazzCash account':'Coming Soon — Integration Pending',dis:!settings.payments.jazz},
+ {k:'easypaisa',icon:'📲',t:'Easypaisa',d:settings.payments.easypaisa?'Pay via Easypaisa account':'Coming Soon — Integration Pending',dis:!settings.payments.easypaisa},
+ {k:'bank',icon:'🏦',t:'Bank Transfer',d:settings.payments.bank?'Transfer & share screenshot on WhatsApp':'On Request — Ask on WhatsApp',dis:!settings.payments.bank},
+ ].filter(o=>settings.payments[o.k]!==undefined);
+ document.getElementById('paymentOptions').innerHTML=opts.map((o,i)=>`<label class="border rounded-xl p-3 flex gap-3 cursor-pointer has-[:checked]:border-brand has-[:checked]:bg-orange-50 ${o.dis?'opacity-60':''}"><input type="radio" name="pay" value="${o.t}" ${i===0?'checked':''} ${o.dis?'disabled':''} class="mt-1"><span class="text-xl">${o.icon}</span><span><b class="text-sm block">${o.t} ${o.dis?'<span class="text-[10px] bg-zinc-200 px-1.5 py-0.5 rounded-full">INACTIVE</span>':''}</b><span class="text-xs text-zinc-500">${o.d}</span></span></label>`).join('');
+ let pt=document.getElementById('payToggles'); if(pt) pt.innerHTML=Object.entries(settings.payments).map(([k,v])=>`<label class="flex justify-between items-center border rounded-xl px-4 py-3 text-sm font-bold capitalize"><span>${{cod:'Cash on Delivery',cashShop:'Cash at Shop',jazz:'JazzCash',easypaisa:'Easypaisa',bank:'Bank Transfer'}[k]}</span><input type="checkbox" ${v?'checked':''} onchange="settings.payments['${k}']=this.checked;renderPayments();toast('Payment setting updated')" class="w-5 h-5 accent-orange-600"></label>`).join('')+`<p class="text-[11px] text-zinc-400">⚠️ Only enable JazzCash/Easypaisa/Bank after proper payment gateway integration & verification.</p>`;
+}
+
+// CHECKOUT & ORDERS
+function openCheckout(){let {c}=cartCountTotal();if(c===0){toast('🛒 Your cart is empty — add items first');return}toggleCart(false);document.getElementById('checkoutModal').classList.remove('hidden');document.getElementById('checkoutModal').classList.add('flex');if(currentUser){document.getElementById('coName').value=currentUser.name||'';document.getElementById('coPhone').value=currentUser.phone||'';if(savedAddresses[0])document.getElementById('coAddress').value=savedAddresses[0]}updateCart()}
+function closeCheckout(){document.getElementById('checkoutModal').classList.add('hidden');document.getElementById('checkoutModal').classList.remove('flex')}
+function placeOrder(e){e.preventDefault();let name=document.getElementById('coName').value,phone=document.getElementById('coPhone').value,addr=document.getElementById('coAddress').value;
+ let pay=document.querySelector('input[name="pay"]:checked')?.value||'Cash on Delivery'; let {sub}=cartCountTotal();let del=deliveryCharge(sub);let disc=promoApplied&&sub>=800?Math.round(sub*0.10):0;let total=sub+del-disc;
+ let itemsText=[...Object.entries(cart).map(([id,q])=>`${q}x ${menu.find(m=>m.id==id).name}`),...Object.values(dealsCart).map(d=>`${d.qty}x ${d.name}`)].join(', ');
+ let oid='NB-'+Math.floor(1000+Math.random()*9000);
+ let order={id:oid,customer:name,phone,items:itemsText||'—',total,status:'Received',type:orderType,pay,date:'Just now',address:addr};
+ orders.unshift(order); userOrders.unshift(order); cart={};dealsCart={};promoApplied=false;updateCart();renderMenu();closeCheckout();
+ document.getElementById('trackOrderId').textContent=oid; document.getElementById('trackEta').textContent=orderType==='Delivery'?'ETA 25-35 min':'Ready in 15-20 min (Takeaway)';
+ document.getElementById('trackDetails').innerHTML=`<p><b>Customer:</b> ${name} • ${phone}</p><p><b>Items:</b> ${itemsText}</p><p><b>${orderType}:</b> ${addr||'Pickup from Shahi Bazar, Pakka Qila'}</p><p><b>Payment:</b> ${pay}</p><p class="flex justify-between border-t pt-1 mt-1"><span>Total Payable</span><b>${fmt(total)}</b></p>${document.getElementById('orderNote').value?`<p><b>Instructions:</b> ${document.getElementById('orderNote').value}</p>`:''}`;
+ document.getElementById('trackWhats').href=`https://wa.me/923122215100?text=${encodeURIComponent('Assalamualaikum! My order '+oid+' ('+fmt(total)+') — '+itemsText+'. Name: '+name)}`;
+ let m=document.getElementById('trackModal');m.classList.remove('hidden');m.classList.add('flex');startTracking();renderAdminOrders();renderProfile();toast('🎉 Order placed successfully!')}
+function startTracking(){if(trackTimer)clearInterval(trackTimer);let steps=[['Order Received — Kitchen will start soon',25],['Preparing — Your food is on the grill 🔥',50],['On the Way — Rider is heading to you 🛵',78],['Delivered — Enjoy your meal! 🍔',100]];let i=0;let bar=document.getElementById('trackBar'),txt=document.getElementById('trackStatusText');bar.style.width='25%';txt.textContent=steps[0][0];trackTimer=setInterval(()=>{i++;if(i>=steps.length){clearInterval(trackTimer);return}bar.style.width=steps[i][1]+'%';txt.textContent=steps[i][0]},3500)}
+function closeTrack(){document.getElementById('trackModal').classList.add('hidden');document.getElementById('trackModal').classList.remove('flex');if(trackTimer)clearInterval(trackTimer)}
+function trackOrderPrompt(){let id=prompt('Enter your Order ID (e.g. NB-7841):','NB-7841');if(!id)return;let o=orders.find(x=>x.id.toUpperCase()===id.toUpperCase())||userOrders[0];if(o){document.getElementById('trackOrderId').textContent=o.id;document.getElementById('trackDetails').innerHTML=`<p><b>Customer:</b> ${o.customer}</p><p><b>Items:</b> ${o.items}</p><p><b>Status:</b> ${o.status} • ${o.type} • ${o.pay}</p><p class="flex justify-between border-t pt-1"><span>Total</span><b>${fmt(o.total)}</b></p>`;document.getElementById('trackStatusText').textContent='Status: '+o.status;document.getElementById('trackBar').style.width=o.status==='Delivered'?'100%':o.status==='On the Way'?'78%':o.status==='Preparing'?'50%':'25%';let m=document.getElementById('trackModal');m.classList.remove('hidden');m.classList.add('flex')}else toast('Order not found — check ID or call 0312 2215100')}
+
+// QUICK VIEW
+function openQuick(id){let m=menu.find(x=>x.id===id);if(!m)return;currentQuickId=id;qQtyVal=1;document.getElementById('qQty').textContent=1;document.getElementById('qImg').src=m.img;document.getElementById('qCat').textContent=m.cat;document.getElementById('qName').textContent=m.name;document.getElementById('qRating').textContent='★★★★★ '+m.rating+' • 100% Fresh';document.getElementById('qDesc').textContent=m.desc;document.getElementById('qPrice').innerHTML=m.price?fmt(m.price)+' <span class="text-sm text-zinc-400 font-sans font-medium">PKR</span>':'<span class="text-brand text-2xl">Price on Request</span>';document.getElementById('qWhats').href=`https://wa.me/923122215100?text=${encodeURIComponent('Assalamualaikum! I want to order: '+m.name+(m.price?' ('+fmt(m.price)+')':''))}`;document.getElementById('qAddBtn').onclick=()=>{if(m.price){addToCart(id,qQtyVal);closeQuick();toggleCart(true)}else{document.getElementById('qWhats').click()}};document.getElementById('qAddBtn').textContent=m.price?'Add to Cart • '+fmt(m.price):'Ask Price on WhatsApp';let md=document.getElementById('quickModal');md.classList.remove('hidden');md.classList.add('flex')}
+function closeQuick(){document.getElementById('quickModal').classList.add('hidden');document.getElementById('quickModal').classList.remove('flex')}
+function qQtyChange(d){qQtyVal=Math.max(1,qQtyVal+d);document.getElementById('qQty').textContent=qQtyVal;let m=menu.find(x=>x.id===currentQuickId);if(m&&m.price)document.getElementById('qAddBtn').textContent='Add to Cart • '+fmt(m.price*qQtyVal)}
+
+// AUTH
+function openAuth(){let m=document.getElementById('authModal');m.classList.remove('hidden');m.classList.add('flex');renderProfile()}
+function closeAuth(){document.getElementById('authModal').classList.add('hidden');document.getElementById('authModal').classList.remove('flex')}
+let authMode='login';
+function switchAuth(mode){authMode=mode;document.getElementById('tabLogin').className='flex-1 py-2 rounded-full '+(mode==='login'?'bg-black text-white':'');document.getElementById('tabSignup').className='flex-1 py-2 rounded-full '+(mode==='signup'?'bg-black text-white':'');document.getElementById('authNameField').classList.toggle('hidden',mode==='login');document.getElementById('authPhone').classList.toggle('hidden',mode==='login');document.getElementById('authTitle').textContent=mode==='login'?'WELCOME BACK':'CREATE ACCOUNT';document.getElementById('authSub').textContent=mode==='login'?'Login to your Noman Burger account':'Sign up for faster ordering & offers';document.getElementById('authSubmitBtn').textContent=mode==='login'?'Login →':'Create Account →'}
+function handleAuth(e){e.preventDefault();let email=document.getElementById('authEmail').value;let name=document.getElementById('authNameField').value||email.split('@')[0];
+ if(email==='admin@noman.com'){openAdminLogin();closeAuth();return}
+ currentUser={name,email,phone:document.getElementById('authPhone').value};document.getElementById('authBtnText').textContent='Hi, '+name.split(' ')[0];document.getElementById('userTop').innerHTML=`<i class="fa-solid fa-circle-user"></i> ${name.split(' ')[0]} • My Account`;renderProfile();toast(`👋 Welcome, ${name.split(' ')[0]}! You are logged in.`)}
+function showForgot(){document.getElementById('forgotBox').classList.remove('hidden');document.getElementById('authMain').classList.add('hidden')}
+function hideForgot(){document.getElementById('forgotBox').classList.add('hidden');document.getElementById('authMain').classList.remove('hidden')}
+function doForgot(){let em=document.getElementById('forgotEmail').value;if(!em)return;document.getElementById('forgotMsg').textContent='✓ Reset link sent to '+em+' (demo). Check inbox & set new password.';toast('📧 Password reset link sent (demo)')}
+function guestCheckout(){closeAuth();toggleCart(true);toast('✓ Guest checkout — no account needed. Proceed to Checkout →')}
+function logout(){currentUser=null;document.getElementById('authBtnText').textContent='Login / Sign Up';document.getElementById('userTop').innerHTML='<i class="fa-regular fa-user"></i> Login';renderProfile();toast('Logged out. See you soon!')}
+function addAddress(){let v=document.getElementById('newAddr').value.trim();if(!v)return;savedAddresses.push(v);document.getElementById('newAddr').value='';renderProfile();toast('📍 Address saved')}
+function renderProfile(){
+ let pb=document.getElementById('profileBox'),am=document.getElementById('authMain');
+ if(currentUser){pb.classList.remove('hidden');am.classList.add('hidden');document.getElementById('profileName').textContent=currentUser.name;document.getElementById('profileEmail').textContent=currentUser.email+(currentUser.phone?' • '+currentUser.phone:'');document.getElementById('profileInitial').textContent=(currentUser.name[0]||'N').toUpperCase();
+ document.getElementById('savedAddr').innerHTML=savedAddresses.map((a,i)=>`<div class="flex justify-between bg-zinc-50 border rounded-xl px-3 py-2 text-sm"><span>📍 ${a}</span><button onclick="savedAddresses.splice(${i},1);renderProfile()" class="text-red-500 text-xs font-bold">Remove</button></div>`).join('')||'<p class="text-sm text-zinc-400">No saved address yet</p>';
+ document.getElementById('orderHistory').innerHTML=(userOrders.length?userOrders:orders.slice(0,2)).map(o=>`<div class="border rounded-xl p-3 text-sm flex justify-between gap-2"><div><b>${o.id}</b> • ${o.status}<br><span class="text-zinc-500 text-xs">${o.items} • ${o.date}</span></div><div class="text-right"><b>${fmt(o.total)}</b><br><button onclick="closeAuth();trackOrderPrompt()" class="text-brand text-xs font-bold">Track →</button></div></div>`).join('');
+ } else {pb.classList.add('hidden');am.classList.remove('hidden')}
+}
+
+// CONTACT / REVIEW
+function submitContact(e){e.preventDefault();e.target.reset();toast('✅ Message sent! We will reply on WhatsApp/Phone shortly.')}
+function addReviewPrompt(){let txt=prompt('Write your review for Noman Burger:');if(!txt)return;let name=currentUser?currentUser.name:'Guest Customer';reviews.unshift({name,area:'Hyderabad',stars:5,text:txt,item:'Recent Order'});renderMenu();toast('⭐ Thank you! Review published.')}
+
+// LEGAL
+const legalData={
+privacy:{t:'Privacy Policy',b:`<p><b>Last updated: 2026 • Noman Burger – Fast Food & BBQ, Hyderabad</b></p><p>We collect information you provide when ordering or contacting us: name, phone/WhatsApp number, delivery address, order details & payment method choice. We also collect device/cookie data to improve our website.</p><p><b>How we use it:</b> To prepare & deliver your order, confirm orders via call/WhatsApp, improve our menu & service, send offers (only with consent), and prevent fraud.</p><p><b>Protection:</b> Your data is stored securely, access is limited to authorised staff, and we never sell your personal information. WhatsApp chats are governed by WhatsApp's privacy policy.</p><p><b>Your rights:</b> You may request access, correction or deletion of your data anytime via WhatsApp 0312 2215100. Guest checkout is available if you prefer not to create an account.</p>`},
+terms:{t:'Terms & Conditions',b:`<p>By using Noman Burger's website & ordering, you agree to these terms.</p><p><b>Orders:</b> Prices are in Pakistani Rupees (PKR) and may change without notice — the price shown at checkout applies. "Price on Request" items are confirmed on WhatsApp/call before preparation.</p><p><b>Delivery:</b> We deliver in Hyderabad (Shahi Bazar, Pakka Qila & nearby areas). Delivery charges & free-delivery threshold are shown in cart. Times are estimates.</p><p><b>Payments:</b> Cash on Delivery & Cash at Shop are active. JazzCash/Easypaisa/Bank Transfer activate only after proper integration & verification.</p><p><b>Accuracy:</b> Food images are representative; actual presentation may vary slightly. Please inform us of allergies before ordering.</p>`},
+refund:{t:'Refund & Cancellation Policy',b:`<p><b>Cancellation:</b> You may cancel free of charge before preparation begins (usually within 5 minutes) by calling/WhatsApp 0312 2215100. Once cooking has started, cancellation may not be possible.</p><p><b>Refunds:</b> If an item is wrong, missing or quality is not acceptable, inform us within 30 minutes of delivery with a photo on WhatsApp. We will offer replacement, store credit or refund (COD refunds via cash/Easypaisa/JazzCash within 2-3 working days).</p><p><b>Online payments:</b> For verified online payments, refunds go to the original method. Delivery charges are non-refundable if the order was delivered as requested.</p>`},
+cookie:{t:'Cookie Policy',b:`<p>We use cookies to: (1) <b>Essential</b> — keep your cart & login working; (2) <b>Analytics</b> — understand popular items & improve the site; (3) <b>Marketing</b> — show relevant offers (only with your consent).</p><p>You can Accept, Reject or Manage Preferences in our cookie banner anytime. Rejecting non-essential cookies will not affect ordering. Read also our Privacy Policy.</p>`}};
+function openLegal(k){document.getElementById('legalTitle').textContent=legalData[k].t;document.getElementById('legalBody').innerHTML=legalData[k].b;let m=document.getElementById('legalModal');m.classList.remove('hidden');m.classList.add('flex')}
+function closeLegal(){document.getElementById('legalModal').classList.add('hidden');document.getElementById('legalModal').classList.remove('flex')}
+
+// COOKIE
+function showCookie(force){let b=document.getElementById('cookieBanner');b.classList.toggle('hidden',!force)}
+function cookieChoice(v){localStorage.setItem('noman_cookies',v);document.getElementById('cookieBanner').classList.add('hidden');toast(v==='accepted'?'🍪 Cookies accepted — thank you!':'🍪 Cookie preference saved')}
+
+// ADMIN
+function openAdminLogin(){if(isAdmin){openAdmin();return}let m=document.getElementById('adminLoginModal');m.classList.remove('hidden');m.classList.add('flex')}
+function closeAdminLogin(){document.getElementById('adminLoginModal').classList.add('hidden');document.getElementById('adminLoginModal').classList.remove('flex')}
+function doAdminLogin(e){e.preventDefault();let em=document.getElementById('adminEmail').value,pw=document.getElementById('adminPass').value;if(em==='admin@noman.com'&&pw==='admin123'){isAdmin=true;closeAdminLogin();openAdmin();toast('🔐 Welcome Super Admin — Noman Owner Panel')}else toast('❌ Invalid admin credentials (use admin@noman.com / admin123)')}
+function openAdmin(){document.getElementById('adminPanel').classList.remove('hidden');document.body.style.overflow='hidden';renderAdminAll()}
+function closeAdmin(){document.getElementById('adminPanel').classList.add('hidden');document.body.style.overflow=''}
+function adminLogout(){isAdmin=false;closeAdmin();toast('Admin logged out securely')}
+function adminTab(name,btn){document.querySelectorAll('.admin-section').forEach(s=>s.classList.add('hidden'));document.getElementById('admin-'+name).classList.remove('hidden');document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('tab-active'));if(btn)btn.classList.add('tab-active');renderAdminAll()}
+function renderAdminAll(){renderAdminMenu('');renderAdminOrders();renderPayments();renderCats();
+ document.getElementById('statItems').textContent=menu.length; document.getElementById('adminItemCount').textContent=menu.length; document.getElementById('statOrders').textContent=43+orders.length;
+ let rev=orders.reduce((s,o)=>s+o.total,0)+9840; document.getElementById('statRevenue').textContent=fmt(rev);
+ document.getElementById('adminRecentOrders').innerHTML=orders.slice(0,4).map(o=>`<div class="flex justify-between border rounded-xl px-3 py-2"><span><b>${o.id}</b> — ${o.customer}<br><span class="text-xs text-zinc-400">${o.items}</span></span><span class="text-right"><b>${fmt(o.total)}</b><br><span class="text-[11px] font-bold text-brand">${o.status}</span></span></div>`).join('');
+ document.getElementById('adminUsersList').innerHTML=admins.map((a,i)=>`<div class="flex justify-between items-center border rounded-xl px-3 py-2.5 text-sm"><span><b>${a.name}</b><br><span class="text-xs text-zinc-400">${a.email} • ${a.perms}</span></span><span class="flex items-center gap-2"><span class="bg-black text-white text-[11px] px-2 py-1 rounded-full font-bold">${a.role}</span>${i>0?`<button onclick="admins.splice(${i},1);renderAdminAll();toast('Admin removed')" class="text-red-500 font-bold text-xs">Remove</button>`:''}</span></div>`).join('');
+}
+function renderAdminMenu(q=''){q=(q||'').toLowerCase();let list=menu.filter(m=>m.name.toLowerCase().includes(q));
+ document.getElementById('adminMenuList').innerHTML=list.map(m=>`<div class="py-3 flex gap-3 items-center"><img src="${m.img}" class="w-14 h-14 rounded-xl object-cover shrink-0"><div class="flex-1 min-w-0"><p class="font-extrabold text-sm truncate">${m.name} ${m.popular?'★':''}</p><p class="text-xs text-zinc-400">${m.cat}</p><div class="flex gap-2 mt-1 items-center"><span class="text-xs font-bold">Rs.</span><input type="number" value="${m.price||''}" placeholder="On Request" class="border rounded-lg px-2 py-1 text-sm w-[110px]" onchange="adminSetPrice(${m.id},this.value)"><span class="text-[11px] ${m.price?'text-emerald-600':'text-brand'} font-bold">${m.price?'LIVE':'PRICE ON REQUEST'}</span></div></div><div class="flex flex-col gap-1 shrink-0"><button onclick="editAdminItem(${m.id})" class="bg-black text-white text-xs px-3 py-1.5 rounded-full font-bold">Edit</button><button onclick="adminDeleteItem(${m.id})" class="bg-red-50 text-red-600 text-xs px-3 py-1.5 rounded-full font-bold">Delete</button></div></div>`).join('')||'<p class="py-6 text-center text-zinc-400 text-sm">No items match</p>'}
+function adminSetPrice(id,v){let m=menu.find(x=>x.id===id);m.price=v===''?null:parseInt(v);renderMenu();updateCart();toast(`💰 Price updated: ${m.name} — ${m.price?fmt(m.price):'Price on Request'}`)}
+function adminDeleteItem(id){if(!confirm('Delete this dish from live menu?'))return;menu=menu.filter(m=>m.id!==id);delete cart[id];renderAdminMenu('');renderMenu();updateCart();toast('🗑️ Item deleted from live website')}
+function editAdminItem(id){let m=menu.find(x=>x.id===id);document.getElementById('aiEditId').value=id;document.getElementById('aiName').value=m.name;document.getElementById('aiCat').value=m.cat;document.getElementById('aiPrice').value=m.price||'';document.getElementById('aiImg').value=m.img;document.getElementById('aiDesc').value=m.desc;document.getElementById('aiPopular').checked=m.popular;let p=document.getElementById('aiPreview');p.src=m.img;p.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});toast('✏️ Editing: '+m.name)}
+function resetAdminForm(){document.getElementById('aiEditId').value='';['aiName','aiPrice','aiImg','aiDesc'].forEach(i=>document.getElementById(i).value='');document.getElementById('aiPopular').checked=false;document.getElementById('aiPreview').classList.add('hidden')}
+function handleAdminUpload(e){let f=e.target.files[0];if(!f)return;document.getElementById('uploadName').textContent=f.name;let r=new FileReader();r.onload=ev=>{document.getElementById('aiImg').value=ev.target.result;let p=document.getElementById('aiPreview');p.src=ev.target.result;p.classList.remove('hidden')};r.readAsDataURL(f)}
+function adminAddItem(e){e.preventDefault();let editId=document.getElementById('aiEditId').value;let data={name:document.getElementById('aiName').value.trim(),cat:document.getElementById('aiCat').value,price:document.getElementById('aiPrice').value?parseInt(document.getElementById('aiPrice').value):null,img:document.getElementById('aiImg').value||'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80',desc:document.getElementById('aiDesc').value||'Freshly prepared at Noman Burger, Hyderabad.',popular:document.getElementById('aiPopular').checked,rating:'4.8 (New)'};
+ if(editId){Object.assign(menu.find(m=>m.id==editId),data);toast('✅ Dish updated live: '+data.name)}else{menu.unshift({id:Date.now(),...data});toast('✅ New dish added live: '+data.name)}
+ if(!categories.includes(data.cat))categories.push(data.cat); resetAdminForm();renderAdminMenu('');renderMenu();renderCats()}
+function renderAdminOrders(){document.getElementById('adminOrdersList').innerHTML=orders.map((o,i)=>`<div class="border rounded-2xl p-4 flex flex-wrap gap-3 justify-between"><div class="text-sm"><b class="text-base">${o.id}</b> <span class="bg-zinc-100 px-2 py-0.5 rounded-full text-[11px] font-bold">${o.type}</span> <span class="bg-orange-100 text-brand px-2 py-0.5 rounded-full text-[11px] font-bold">${o.pay}</span><br><b>${o.customer}</b> • ${o.phone}<br><span class="text-zinc-500">${o.items}</span><br><span class="text-xs text-zinc-400">${o.date}</span></div><div class="text-right"><p class="font-display text-2xl">${fmt(o.total)}</p><select onchange="orders[${i}].status=this.value;renderAdminOrders();toast('Order ${o.id} → '+this.value)" class="border rounded-full px-3 py-1.5 text-sm font-bold mt-1"><option ${o.status==='Received'?'selected':''}>Received</option><option ${o.status==='Preparing'?'selected':''}>Preparing</option><option ${o.status==='On the Way'?'selected':''}>On the Way</option><option ${o.status==='Delivered'?'selected':''}>Delivered</option><option ${o.status==='Cancelled'?'selected':''}>Cancelled</option></select><br><a target="_blank" href="https://wa.me/923122215100?text=${encodeURIComponent('Order '+o.id+' update: '+o.status)}" class="text-emerald-600 text-xs font-bold">WhatsApp Customer →</a></div></div>`).join('')||'<p class="text-zinc-400 text-sm">No orders yet</p>'}
+function saveSettings(){settings.delivery=parseInt(document.getElementById('setDelivery').value)||80;settings.freeAbove=parseInt(document.getElementById('setFree').value)||1000;document.getElementById('heroTitle').innerHTML=document.getElementById('setHero').value.replace(/FLAME/g,'<span class="text-brand2">FLAME</span>');document.getElementById('delInfo').textContent=`✓ Delivery ${fmt(settings.delivery)} • FREE over ${fmt(settings.freeAbove)}`;document.getElementById('footDelivery').textContent=fmt(settings.delivery);document.getElementById('hoursText').textContent=document.getElementById('setHours').value;updateCart();toast('💾 Settings published live on website!')}
+function setTheme(c){document.documentElement.style.setProperty('--brand',c);document.querySelectorAll('.bg-brand').forEach(el=>el.style.backgroundColor=c);document.getElementById('themeLabel').textContent=c+' (Applied Live)';toast('🎨 Website colour updated to '+c)}
+function addCategory(){let v=document.getElementById('newCatInput').value.trim();if(!v)return;categories.push(v);document.getElementById('newCatInput').value='';renderCats();renderAdminAll();toast('📂 Category added: '+v)}
+function addPromo(){let v=document.getElementById('newPromo').value.trim().toUpperCase();if(!v)return;toast('🎟️ Promo '+v+' created (demo — NOMAN10 remains active)');document.getElementById('newPromo').value=''}
+function createAdmin(e){e.preventDefault();admins.push({name:document.getElementById('naName').value,email:document.getElementById('naEmail').value,role:document.getElementById('naRole').value,perms:'Custom'});e.target.reset();renderAdminAll();toast('👥 New admin account created')}
+
+// INIT
+renderCats();renderMenu();updateCart();renderPayments();
+if(!localStorage.getItem('noman_cookies')) setTimeout(()=>document.getElementById('cookieBanner').classList.remove('hidden'),1200);
+document.getElementById('cartDrawer').style.transform='translateX(100%)';
+['authModal','checkoutModal','trackModal','quickModal','legalModal','adminLoginModal'].forEach(id=>{document.getElementById(id).addEventListener('click',e=>{if(e.target.id===id){e.target.classList.add('hidden');e.target.classList.remove('flex')}})});
+</script>
+</body>
+</html>
